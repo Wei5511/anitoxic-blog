@@ -4,34 +4,68 @@ import Link from 'next/link';
 export const dynamic = 'force-dynamic';
 
 export default async function AdminDashboard() {
+    // 1. Env Var Check
+    if (!process.env.TURSO_DATABASE_URL || !process.env.TURSO_AUTH_TOKEN) {
+        return (
+            <div style={{ padding: '2rem', color: '#d32f2f' }}>
+                <h1 style={{ fontSize: '1.5rem', fontWeight: 'bold' }}>Configuration Error</h1>
+                <p style={{ marginTop: '1rem' }}>
+                    Missing <code>TURSO_DATABASE_URL</code> or <code>TURSO_AUTH_TOKEN</code> environment variables.
+                </p>
+                <div style={{ background: '#f5f5f5', padding: '1rem', marginTop: '1rem', borderRadius: '4px' }}>
+                    <p>Current Status:</p>
+                    <ul>
+                        <li>URL: {process.env.TURSO_DATABASE_URL ? '✅ Set' : '❌ Missing'}</li>
+                        <li>Token: {process.env.TURSO_AUTH_TOKEN ? '✅ Set' : '❌ Missing'}</li>
+                    </ul>
+                </div>
+            </div>
+        );
+    }
     // Determine counts
-    // executeQuery returns { rows: [], get: (), ... }
+    let articlesCount = 0;
+    let pinnedCount = 0;
+    let bannersCount = 0;
+    let activeBannersCount = 0;
+    let errorMsg = null;
 
-    // Total articles
-    const articlesRes = await executeQuery('SELECT COUNT(*) as count FROM articles');
-    const articlesCount = articlesRes.get().count;
+    try {
+        const articlesRes = await executeQuery('SELECT COUNT(*) as count FROM articles');
+        articlesCount = articlesRes.get().count;
 
-    // Pinned articles
-    const pinnedRes = await executeQuery('SELECT COUNT(*) as count FROM articles WHERE is_pinned = 1');
-    const pinnedCount = pinnedRes.get().count;
+        const pinnedRes = await executeQuery('SELECT COUNT(*) as count FROM articles WHERE is_pinned = 1');
+        pinnedCount = pinnedRes.get().count;
 
-    // Banners
-    const bannersRes = await executeQuery('SELECT COUNT(*) as count FROM banners');
-    const bannersCount = bannersRes.get().count;
+        const bannersRes = await executeQuery('SELECT COUNT(*) as count FROM banners');
+        bannersCount = bannersRes.get().count;
 
-    // Active Banners
-    const activeBannersRes = await executeQuery('SELECT COUNT(*) as count FROM banners WHERE is_active = 1');
-    const activeBannersCount = activeBannersRes.get().count;
+        const activeBannersRes = await executeQuery('SELECT COUNT(*) as count FROM banners WHERE is_active = 1');
+        activeBannersCount = activeBannersRes.get().count;
+    } catch (e) {
+        console.error('Dashboard Error:', e);
+        errorMsg = e.message + (e.stack ? '\n' + e.stack : '');
+    }
+
+    if (errorMsg) {
+        return (
+            <div style={{ padding: '2rem', color: 'red' }}>
+                <h1>Dashboard Error</h1>
+                <pre style={{ background: '#eee', padding: '1rem', overflow: 'auto' }}>
+                    {errorMsg}
+                </pre>
+            </div>
+        );
+    }
 
     return (
         <div>
             <h1 style={{ fontSize: '1.5rem', fontWeight: 'bold', marginBottom: '1.5rem' }}>儀表板總覽</h1>
 
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '1.5rem', marginBottom: '2rem' }}>
-                <StatsCard title="文章總數" value={articleCount} />
+                <StatsCard title="文章總數" value={articlesCount} />
                 <StatsCard title="精選置頂" value={pinnedCount} label="Featured" />
-                <StatsCard title="橫幅總數" value={bannerCount} />
-                <StatsCard title="啟用中橫幅" value={activeBannerCount} label="Live" />
+                <StatsCard title="橫幅總數" value={bannersCount} />
+                <StatsCard title="啟用中橫幅" value={activeBannersCount} label="Live" />
             </div>
 
             <h2 style={{ fontSize: '1.25rem', fontWeight: 'bold', marginBottom: '1rem' }}>快速操作</h2>
