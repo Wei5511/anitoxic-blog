@@ -812,3 +812,18 @@ a:hover {
     background-color: #e65c00;
     color: #fff !important;
 }
+
+/* ========== 首頁 RWD 佈局 ========== */
+.home-layout-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 2fr) 1fr;
+    gap: 3rem;
+    align-items: start;
+}
+
+@media (max-width: 900px) {
+    .home-layout-grid {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+}

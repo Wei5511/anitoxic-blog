@@ -75,7 +75,7 @@ export default function HomePage() {
     <div className="container" style={{ paddingTop: '2rem' }}>
 
       {/* Main Layout: Content + Sidebar */}
-      <div style={{ display: 'grid', gridTemplateColumns: 'minmax(0, 2fr) 1fr', gap: '3rem', alignItems: 'start' }}>
+      <div className="home-layout-grid">
 
         {/* LEFT COLUMN: Latest Articles Feed */}
         <main>
