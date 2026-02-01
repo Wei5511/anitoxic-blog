@@ -9,7 +9,15 @@
     "lint": "eslint"
   },
   "dependencies": {
+    "@libsql/client": "^0.17.0",
+    "axios": "^1.13.3",
+    "better-sqlite3": "^12.6.2",
+    "cheerio": "^1.2.0",
+    "date-fns": "^4.1.0",
+    "dotenv": "^17.2.3",
     "next": "16.1.5",
+    "node-cron": "^4.2.1",
+    "puppeteer": "^24.36.1",
     "react": "19.2.3",
     "react-dom": "19.2.3"
   },

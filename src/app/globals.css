@@ -1,42 +1,814 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&display=swap');
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+    /* 主題色彩 - 和諧的藍灰色調 */
+    --primary-color: #3b82f6;
+    --primary-hover: #2563eb;
+    --primary-light: #dbeafe;
+    --secondary-color: #1e293b;
+    --accent-color: #0ea5e9;
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
+    /* 背景色 - 明亮乾淨 */
+    --bg-primary: #ffffff;
+    --bg-secondary: #f8fafc;
+    --bg-card: #ffffff;
+    --bg-card-hover: #f1f5f9;
+    --bg-dark: #1e293b;
 
-html,
-body {
-  max-width: 100vw;
-  overflow-x: hidden;
-}
+    /* 文字色 */
+    --text-primary: #0f172a;
+    --text-secondary: #475569;
+    --text-muted: #94a3b8;
+    --text-light: #ffffff;
 
-body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+    /* 其他 */
+    --border-color: #e2e8f0;
+    --border-dark: #cbd5e1;
+    --shadow-color: rgba(0, 0, 0, 0.08);
+    --shadow-heavy: rgba(0, 0, 0, 0.15);
 }
 
 * {
-  box-sizing: border-box;
-  padding: 0;
-  margin: 0;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+/* html {
+    scroll-behavior: smooth; 
+} */
+
+body {
+    font-family: 'Noto Sans TC', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    line-height: 1.7;
+    min-height: 100vh;
+}
+
+/* 標題樣式 */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-weight: 700;
+    line-height: 1.3;
+    color: var(--text-primary);
 }
 
 a {
-  color: inherit;
-  text-decoration: none;
+    color: var(--text-primary);
+    text-decoration: none;
+    transition: color 0.2s ease;
 }
 
-@media (prefers-color-scheme: dark) {
-  html {
-    color-scheme: dark;
-  }
+a:hover {
+    color: var(--primary-color);
+}
+
+/* 主要容器 */
+.container {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 2rem;
+}
+
+/* ========== 頁首 ========== */
+.header {
+    background: var(--bg-primary);
+    border-bottom: 1px solid var(--border-color);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.header-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem 0;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    font-size: 1.5rem;
+    font-weight: 900;
+    color: var(--text-primary);
+}
+
+.logo:hover {
+    color: var(--text-primary);
+}
+
+.logo-main {
+    font-weight: 700;
+    font-size: 1.4rem;
+    color: var(--text-primary);
+}
+
+.logo-tagline {
+    font-weight: 400;
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    margin-left: 0.75rem;
+}
+
+.logo-icon {
+    font-size: 1.5rem;
+    margin-left: 0.5rem;
+}
+
+.logo-image {
+    height: 44px;
+    width: auto;
+}
+
+.nav {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.nav-link {
+    color: var(--text-secondary);
+    font-weight: 500;
+    padding: 0.5rem 1rem;
+    border-radius: 0.25rem;
+    transition: all 0.2s ease;
+    font-size: 0.95rem;
+}
+
+.nav-link:hover {
+    color: var(--text-primary);
+    background: var(--bg-secondary);
+}
+
+.nav-link.active {
+    color: var(--text-light);
+    background: var(--primary-color);
+}
+
+/* ========== 英雄區域 ========== */
+.hero {
+    background: var(--bg-secondary);
+    padding: 3rem 0;
+    text-align: center;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.hero-content {
+    position: relative;
+    z-index: 1;
+}
+
+.hero h1 {
+    font-size: 2.5rem;
+    font-weight: 900;
+    margin-bottom: 0.75rem;
+    color: var(--text-primary);
+}
+
+.hero p {
+    font-size: 1.1rem;
+    color: var(--text-secondary);
+    max-width: 600px;
+    margin: 0 auto 1.5rem;
+}
+
+/* ========== 季節選擇器 ========== */
+.season-selector {
+    display: flex;
+    justify-content: center;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+    margin-bottom: 1.5rem;
+}
+
+.season-btn {
+    background: var(--bg-primary);
+    border: 2px solid var(--border-color);
+    color: var(--text-secondary);
+    padding: 0.6rem 1.25rem;
+    border-radius: 0.25rem;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.season-btn:hover {
+    border-color: var(--primary-color);
+    color: var(--primary-color);
+}
+
+.season-btn.active {
+    background: var(--primary-color);
+    border-color: var(--primary-color);
+    color: var(--text-light);
+}
+
+/* ========== 動漫卡片網格 ========== */
+.anime-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 1.5rem;
+    padding: 2rem 0;
+}
+
+/* ========== 動漫卡片 ========== */
+.anime-card {
+    background: var(--bg-card);
+    border-radius: 0.5rem;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    border: 1px solid var(--border-color);
+    cursor: pointer;
+}
+
+.anime-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 24px var(--shadow-heavy);
+    border-color: var(--primary-color);
+}
+
+.anime-card-image {
+    position: relative;
+    aspect-ratio: 2/3;
+    overflow: hidden;
+    background: #000;
+}
+
+.anime-card-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.anime-card:hover .anime-card-image img {
+    transform: scale(1.03);
+}
+
+.anime-card-score {
+    position: absolute;
+    top: 0.75rem;
+    right: 0.75rem;
+    background: var(--primary-color);
+    color: var(--text-light);
+    padding: 0.35rem 0.75rem;
+    border-radius: 0.25rem;
+    font-weight: 700;
+    font-size: 0.85rem;
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+}
+
+.anime-card-content {
+    padding: 1.25rem;
+}
+
+.anime-card-title {
+    font-size: 1rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    color: var(--text-primary);
+}
+
+.anime-card-meta {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.anime-card-tag {
+    background: var(--primary-light);
+    color: var(--primary-hover);
+    padding: 0.2rem 0.5rem;
+    border-radius: 0.25rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+}
+
+/* ========== 動漫詳情頁 ========== */
+.anime-detail {
+    padding: 2rem 0;
+}
+
+.anime-detail-header {
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    gap: 2rem;
+    margin-bottom: 2rem;
+}
+
+.anime-detail-poster {
+    border-radius: 0.5rem;
+    overflow: hidden;
+    box-shadow: 0 8px 24px var(--shadow-heavy);
+}
+
+.anime-detail-poster img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+.anime-detail-info h1 {
+    font-size: 2rem;
+    font-weight: 900;
+    margin-bottom: 0.5rem;
+}
+
+.anime-detail-title-jp {
+    font-size: 1.1rem;
+    color: var(--text-muted);
+    margin-bottom: 1.5rem;
+}
+
+.anime-detail-stats {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.stat-item {
+    text-align: center;
+    padding: 0.75rem 1.25rem;
+    background: var(--bg-secondary);
+    border-radius: 0.5rem;
+    border: 1px solid var(--border-color);
+}
+
+.stat-value {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--primary-color);
+}
+
+.stat-label {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+}
+
+.anime-detail-synopsis {
+    font-size: 1rem;
+    line-height: 1.9;
+    color: var(--text-secondary);
+    margin-bottom: 2rem;
+}
+
+/* ========== 嵌入式影片 ========== */
+.embed-container {
+    margin: 2rem 0;
+}
+
+.embed-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    color: var(--text-primary);
+}
+
+.video-embed {
+    position: relative;
+    padding-bottom: 56.25%;
+    height: 0;
+    border-radius: 0.5rem;
+    overflow: hidden;
+    background: var(--bg-dark);
+}
+
+.video-embed iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: none;
+}
+
+/* ========== 載入動畫 ========== */
+.loading {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 4rem;
+    color: var(--text-muted);
+}
+
+.loading-spinner {
+    width: 40px;
+    height: 40px;
+    border: 3px solid var(--border-color);
+    border-top-color: var(--primary-color);
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+    margin-bottom: 1rem;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* ========== 按鈕 ========== */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.5rem;
+    border-radius: 0.25rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border: none;
+    font-size: 0.95rem;
+    text-decoration: none;
+}
+
+.btn-primary {
+    background: var(--primary-color);
+    color: var(--text-light);
+}
+
+.btn-primary:hover {
+    background: var(--primary-hover);
+    color: var(--text-light);
+    transform: translateY(-1px);
+}
+
+.btn-secondary {
+    background: var(--bg-secondary);
+    color: var(--text-primary);
+    border: 1px solid var(--border-color);
+}
+
+.btn-secondary:hover {
+    border-color: var(--primary-color);
+    color: var(--primary-color);
+}
+
+/* ========== 頁尾 ========== */
+.footer {
+    background: var(--bg-dark);
+    color: var(--text-light);
+    padding: 2rem 0;
+    margin-top: 4rem;
+    text-align: center;
+}
+
+.footer p {
+    opacity: 0.8;
+    font-size: 0.9rem;
+}
+
+/* ========== 文章相關樣式 ========== */
+.article-list {
+    display: grid;
+    gap: 1.5rem;
+}
+
+.article-card {
+    background: var(--bg-card);
+    border-radius: 0.5rem;
+    padding: 1.5rem;
+    border: 1px solid var(--border-color);
+    transition: all 0.2s ease;
+    display: flex;
+    gap: 1.5rem;
+    align-items: flex-start;
+}
+
+.article-card:hover {
+    box-shadow: 0 8px 24px var(--shadow-color);
+    border-color: var(--primary-color);
+}
+
+.article-card-image {
+    width: 180px;
+    height: 240px;
+    flex-shrink: 0;
+    border-radius: 0.25rem;
+    overflow: hidden;
+}
+
+.article-card-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.article-card-content {
+    flex: 1;
+}
+
+.article-category {
+    display: inline-block;
+    background: var(--primary-color);
+    color: var(--text-light);
+    padding: 0.25rem 0.75rem;
+    border-radius: 0.25rem;
+    font-size: 0.8rem;
+    font-weight: 600;
+    margin-bottom: 0.75rem;
+}
+
+.article-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    color: var(--text-primary);
+    line-height: 1.4;
+}
+
+.article-excerpt {
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+    line-height: 1.7;
+    margin-bottom: 1rem;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.article-meta {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    display: flex;
+    gap: 1rem;
+}
+
+/* ========== 響應式設計 ========== */
+@media (max-width: 768px) {
+    .hero h1 {
+        font-size: 1.75rem;
+    }
+
+    .anime-detail-header {
+        grid-template-columns: 1fr;
+        text-align: center;
+    }
+
+    .anime-detail-poster {
+        max-width: 250px;
+        margin: 0 auto;
+    }
+
+    .anime-detail-stats {
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+
+    .nav {
+        display: none;
+    }
+
+    .article-card {
+        flex-direction: column;
+    }
+
+    .article-card-image {
+        width: 100%;
+        height: 200px;
+    }
+}
+
+/* ========== 無資料狀態 ========== */
+.empty-state {
+    text-align: center;
+    padding: 4rem 2rem;
+    color: var(--text-muted);
+}
+
+.empty-state-icon {
+    font-size: 4rem;
+    margin-bottom: 1rem;
+}
+
+/* ========== 分類標籤樣式 (incgmedia 風格) ========== */
+.category-tag {
+    display: inline-block;
+    background: var(--primary-color);
+    color: var(--text-light);
+    padding: 0.3rem 0.8rem;
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+}
+
+/* ========== 側邊欄標題 (TRENDING 風格) ========== */
+.sidebar-title {
+    font-size: 1.5rem;
+    font-weight: 900;
+    font-style: italic;
+    color: var(--primary-color);
+    border-bottom: 3px solid var(--primary-color);
+    padding-bottom: 0.5rem;
+    margin-bottom: 1.5rem;
+}
+
+/* ========== 資訊區塊 ========== */
+.info-box {
+    background: var(--primary-light);
+    border-left: 4px solid var(--primary-color);
+    padding: 1rem 1.25rem;
+    margin: 1.5rem 0;
+    border-radius: 0 0.25rem 0.25rem 0;
+}
+
+.info-box p {
+    color: var(--primary-hover);
+    font-weight: 500;
+    margin: 0;
+}
+
+/* ========== 每週更新文章專用樣式 (Weekly Update) ========== */
+.anime-item {
+    margin-bottom: 3rem;
+    padding: 2rem;
+    background: #ffffff;
+    border-radius: 1rem;
+    border: 1px solid #e5e7eb;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    transition: all 0.3s ease;
+    overflow: hidden;
+}
+
+.dark .anime-item {
+    background: #18181b;
+    border-color: #27272a;
+}
+
+.anime-item:hover {
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    transform: translateY(-2px);
+}
+
+.anime-item-flex {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+@media (min-width: 768px) {
+    .anime-item-flex {
+        flex-direction: row;
+    }
+}
+
+.anime-item-thumb {
+    width: 100%;
+    flex-shrink: 0;
+}
+
+@media (min-width: 768px) {
+    .anime-item-thumb {
+        width: 30%;
+    }
+}
+
+.anime-item-image-container {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16/9;
+    border-radius: 0.5rem;
+    overflow: hidden;
+    background: #f3f4f6;
+}
+
+@media (min-width: 768px) {
+    .anime-item-image-container {
+        aspect-ratio: 3/4;
+    }
+}
+
+.anime-item-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.anime-item-badge {
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
+    background: #dc2626;
+    color: white;
+    font-size: 0.75rem;
+    font-weight: 700;
+    padding: 0.25rem 0.5rem;
+    border-radius: 0.25rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.anime-item-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.anime-item-title {
+    font-size: 1.5rem;
+    font-weight: 800;
+    margin-bottom: 0.75rem;
+    color: #111827;
+}
+
+.dark .anime-item-title {
+    color: #f3f4f6;
+}
+
+.anime-item-subtitle {
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: #ea580c;
+    margin-bottom: 0.5rem;
+}
+
+.anime-item-description {
+    color: #4b5563;
+    line-height: 1.7;
+    margin-bottom: 1.5rem;
+    text-align: justify;
+}
+
+.dark .anime-item-description {
+    color: #d1d5db;
+}
+
+.anime-item-footer {
+    margin-top: auto;
+}
+
+.btn-weekly {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    padding: 0.75rem 1.5rem;
+    background: linear-gradient(to right, #f97316, #ef4444);
+    color: white !important;
+    font-weight: 700;
+    border-radius: 0.5rem;
+    box-shadow: 0 4px 6px rgba(249, 115, 22, 0.2);
+    transition: all 0.2s;
+    text-decoration: none !important;
+}
+
+@media (min-width: 768px) {
+    .btn-weekly {
+        width: auto;
+    }
+}
+
+.btn-weekly:hover {
+    background: linear-gradient(to right, #ea580c, #dc2626);
+    transform: translateY(-1px);
+    box-shadow: 0 6px 12px rgba(249, 115, 22, 0.3);
+}
+
+.weekly-outro {
+    margin-top: 3rem;
+    padding: 2rem;
+    background: #fff7ed;
+    border-radius: 1rem;
+    text-align: center;
+    border: 1px dashed #fdba74;
+}
+
+.dark .weekly-outro {
+    background: rgba(124, 45, 18, 0.1);
+    border-color: #7c2d12;
+}
+
+/* ========== 小橘色按鈕 (修復樣式) ========== */
+.btn-orange-small {
+    display: inline-block;
+    background-color: #ff6600;
+    color: #fff !important;
+    padding: 8px 16px;
+    border-radius: 4px;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 0.9rem;
+    transition: background-color 0.2s;
+    margin-top: 5px;
+}
+
+.btn-orange-small:hover {
+    background-color: #e65c00;
+    color: #fff !important;
 }
