@@ -1,14 +1,12 @@
 import { NextResponse } from 'next/server';
-import { getDb } from '@/lib/db';
+import { executeQuery } from '@/lib/database';
 
 // GET /api/articles/[id] - Get single article
-export async function GET(request, context) {
+export async function GET(request, { params }) {
     try {
-        const db = getDb();
-        const params = await context.params;
-        const { id } = params;
-
-        const article = db.prepare('SELECT * FROM articles WHERE id = ?').get(id);
+        const { id } = await params;
+        const res = await executeQuery('SELECT * FROM articles WHERE id = ?', [id]);
+        const article = res.get ? res.get() : (res.rows ? res.rows[0] : null);
 
         if (!article) {
             return NextResponse.json({ error: 'Article not found' }, { status: 404 });
@@ -16,6 +14,7 @@ export async function GET(request, context) {
 
         return NextResponse.json({ success: true, data: article });
     } catch (error) {
+        console.error('API Error:', error);
         return NextResponse.json({ success: false, error: 'Internal Server Error' }, { status: 500 });
     }
 }
@@ -23,33 +22,24 @@ export async function GET(request, context) {
 // PUT /api/articles/[id] - Update article
 export async function PUT(request, { params }) {
     try {
-        const db = getDb();
-        const { id } = params;
+        const { id } = await params;
         const body = await request.json();
         const { title, slug, content, category, image_url, myvideo_url, is_pinned } = body;
 
-        const excerpt = content ? content.replace(/[#*`]/g, '').slice(0, 100) + '...' : '';
-
-        const stmt = db.prepare(`
+        await executeQuery(`
             UPDATE articles 
             SET title = ?, slug = ?, content = ?, category = ?, is_pinned = ?, image_url = ?, myvideo_url = ?, updated_at = CURRENT_TIMESTAMP
             WHERE id = ?
-        `);
-
-        const result = stmt.run(
-            body.title,
-            body.slug || body.title,
-            body.content,
-            body.category,
-            body.is_pinned ? 1 : 0,
-            body.image_url,
-            body.myvideo_url,
+        `, [
+            title,
+            slug || title,
+            content,
+            category,
+            is_pinned ? 1 : 0,
+            image_url,
+            myvideo_url,
             id
-        );
-
-        if (result.changes === 0) {
-            return NextResponse.json({ success: false, error: 'Article not found' }, { status: 404 });
-        }
+        ]);
 
         return NextResponse.json({ success: true, message: 'Updated successfully' });
     } catch (error) {
@@ -59,18 +49,10 @@ export async function PUT(request, { params }) {
 }
 
 // DELETE /api/articles/[id] - Delete article
-export async function DELETE(request, context) {
+export async function DELETE(request, { params }) {
     try {
-        const db = getDb();
-        const params = await context.params;
-        const { id } = params;
-
-        const result = db.prepare('DELETE FROM articles WHERE id = ?').run(id);
-
-        if (result.changes === 0) {
-            return NextResponse.json({ success: false, error: 'Article not found' }, { status: 404 });
-        }
-
+        const { id } = await params;
+        await executeQuery('DELETE FROM articles WHERE id = ?', [id]);
         return NextResponse.json({ success: true, message: 'Deleted successfully' });
     } catch (error) {
         return NextResponse.json({ success: false, error: 'Internal Server Error' }, { status: 500 });
