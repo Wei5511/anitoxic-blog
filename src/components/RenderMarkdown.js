@@ -6,12 +6,70 @@ export default function RenderMarkdown({ content, isPinned = false }) {
     if (!content) return null;
 
     const parseInline = (text) => {
-        const parts = text.split(/(\*\*.*?\*\*)/g);
-        return parts.map((part, index) => {
-            if (part.startsWith('**') && part.endsWith('**')) {
-                return <strong key={index} style={{ color: '#000', fontWeight: '700' }}>{part.slice(2, -2)}</strong>;
+        // First split by code blocks, links, and bold
+        const parts = [];
+        let remaining = text;
+
+        // Regex to match Markdown links: [text](url)
+        const linkRegex = /\[([^\]]+)\]\(([^)]+)\)/g;
+        const boldRegex = /(\*\*[^*]+\*\*)/g;
+
+        // Combine patterns
+        const combinedRegex = /(\[([^\]]+)\]\(([^)]+)\))|(\*\*[^*]+\*\*)/g;
+
+        let lastIndex = 0;
+        let match;
+
+        while ((match = combinedRegex.exec(text)) !== null) {
+            // Add text before match
+            if (match.index > lastIndex) {
+                parts.push({ type: 'text', content: text.substring(lastIndex, match.index) });
             }
-            return part;
+
+            if (match[1]) {
+                // It's a link: [text](url)
+                parts.push({ type: 'link', text: match[2], url: match[3] });
+            } else if (match[4]) {
+                // It's bold: **text**
+                parts.push({ type: 'bold', content: match[4].slice(2, -2) });
+            }
+
+            lastIndex = match.index + match[0].length;
+        }
+
+        // Add remaining text
+        if (lastIndex < text.length) {
+            parts.push({ type: 'text', content: text.substring(lastIndex) });
+        }
+
+        // If no matches found, return original text
+        if (parts.length === 0) {
+            return text;
+        }
+
+        // Render parts
+        return parts.map((part, index) => {
+            if (part.type === 'link') {
+                return (
+                    <a
+                        key={index}
+                        href={part.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        style={{
+                            color: '#FF6600',
+                            textDecoration: 'underline',
+                            fontWeight: '500'
+                        }}
+                    >
+                        {part.text}
+                    </a>
+                );
+            } else if (part.type === 'bold') {
+                return <strong key={index} style={{ color: '#000', fontWeight: '700' }}>{part.content}</strong>;
+            } else {
+                return part.content;
+            }
         });
     };
 
@@ -44,7 +102,7 @@ export default function RenderMarkdown({ content, isPinned = false }) {
         // Orange Small Button (Embedded HTML)
         // Matches: <a href="..." class="btn-orange-small" target="_blank">...</a>
         // Note: We use a somewhat loose regex to capture the href and text.
-        const orangeBtnMatch = line.match(/^<a href="([^"]+)" class="btn-orange-small" target="_blank">(.+)<\/a>$/);
+        const orangeBtnMatch = trimmed.match(/^<a href="([^"]+)" class="btn-orange-small" target="_blank">(.+)<\/a>$/);
         if (orangeBtnMatch) {
             return (
                 <div key={i} style={{ margin: '1rem 0', textAlign: 'center' }}>
@@ -85,7 +143,7 @@ export default function RenderMarkdown({ content, isPinned = false }) {
         }
 
         // 圖片處理
-        const imgMatch = line.match(/^!\[([^\]]*)\]\(([^)]+)\)$/);
+        const imgMatch = trimmed.match(/^!\[([^\]]*)\]\(([^)]+)\)$/);
         if (imgMatch) {
             return (
                 <div key={i} style={isPinned ? markdownStyles.pinnedImageContainer : markdownStyles.itemImage}>

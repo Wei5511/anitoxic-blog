@@ -1,0 +1,842 @@
+[
+  {
+    "mal_id": 4334,
+    "title": "Heroman",
+    "title_chinese": "HEROMAN"
+  },
+  {
+    "mal_id": 5032,
+    "title": "Cobra The Animation",
+    "title_chinese": "眼鏡蛇"
+  },
+  {
+    "mal_id": 5277,
+    "title": "Sekirei: Pure Engagement",
+    "title_chinese": "鶺鴒女神"
+  },
+  {
+    "mal_id": 5690,
+    "title": "Nodame Cantabile Finale",
+    "title_chinese": "交響情人夢"
+  },
+  {
+    "mal_id": 6114,
+    "title": "Rainbow: Nisha Rokubou no Shichinin",
+    "title_chinese": "少年犯罪檔案"
+  },
+  {
+    "mal_id": 6166,
+    "title": "Asobi ni Iku yo!",
+    "title_chinese": "玩伴貓耳娘"
+  },
+  {
+    "mal_id": 6195,
+    "title": "Rita to Nantoka",
+    "title_chinese": "リタとナントカ"
+  },
+  {
+    "mal_id": 6324,
+    "title": "Omamori Himari",
+    "title_chinese": "守護貓娘緋鞠"
+  },
+  {
+    "mal_id": 6347,
+    "title": "Baka to Test to Shoukanjuu",
+    "title_chinese": "笨蛋，測驗，召喚獸"
+  },
+  {
+    "mal_id": 6381,
+    "title": "Strike Witches 2",
+    "title_chinese": "強襲魔女"
+  },
+  {
+    "mal_id": 6500,
+    "title": "Seikon no Qwaser",
+    "title_chinese": "聖痕鍊金士"
+  },
+  {
+    "mal_id": 6547,
+    "title": "Angel Beats!",
+    "title_chinese": "Angel Beats!"
+  },
+  {
+    "mal_id": 6574,
+    "title": "Hanamaru Youchien",
+    "title_chinese": "花丸幼稚園"
+  },
+  {
+    "mal_id": 6594,
+    "title": "Katanagatari",
+    "title_chinese": "刀語"
+  },
+  {
+    "mal_id": 6645,
+    "title": "Chuu Bra!!",
+    "title_chinese": "青春CUP"
+  },
+  {
+    "mal_id": 6707,
+    "title": "Kuroshitsuji II",
+    "title_chinese": "黑執事"
+  },
+  {
+    "mal_id": 6746,
+    "title": "Durarara!!",
+    "title_chinese": "無頭騎士異聞錄 DuRaRaRa!!"
+  },
+  {
+    "mal_id": 6747,
+    "title": "Dance in the Vampire Bund",
+    "title_chinese": "吸血鬼同盟"
+  },
+  {
+    "mal_id": 6802,
+    "title": "So Ra No Wo To",
+    "title_chinese": "空・之・音"
+  },
+  {
+    "mal_id": 6875,
+    "title": "Iron Man",
+    "title_chinese": "Iron Man"
+  },
+  {
+    "mal_id": 6880,
+    "title": "Deadman Wonderland",
+    "title_chinese": "死囚樂園"
+  },
+  {
+    "mal_id": 6895,
+    "title": "Hakuouki",
+    "title_chinese": "薄櫻鬼"
+  },
+  {
+    "mal_id": 6918,
+    "title": "Wolverine",
+    "title_chinese": "Wolverine and the X-Men"
+  },
+  {
+    "mal_id": 6919,
+    "title": "X-Men",
+    "title_chinese": "特異功能組"
+  },
+  {
+    "mal_id": 6920,
+    "title": "Blade",
+    "title_chinese": "Fate/stay night [Unlimited Blade Works]"
+  },
+  {
+    "mal_id": 6956,
+    "title": "Working!!",
+    "title_chinese": "WORKING!!迷糊餐廳"
+  },
+  {
+    "mal_id": 6973,
+    "title": "Senkou no Night Raid",
+    "title_chinese": "閃光的夜襲"
+  },
+  {
+    "mal_id": 6974,
+    "title": "Seikimatsu Occult Gakuin",
+    "title_chinese": "世紀末超自然學院"
+  },
+  {
+    "mal_id": 6979,
+    "title": "Shukufuku no Campanella",
+    "title_chinese": "祝福的鐘聲"
+  },
+  {
+    "mal_id": 7054,
+    "title": "Kaichou wa Maid-sama!",
+    "title_chinese": "學生會長是女僕！"
+  },
+  {
+    "mal_id": 7058,
+    "title": "Uragiri wa Boku no Namae wo Shitteiru",
+    "title_chinese": "無法掙脫的背叛"
+  },
+  {
+    "mal_id": 7062,
+    "title": "Hidamari Sketch x ☆☆☆",
+    "title_chinese": "向陽素描"
+  },
+  {
+    "mal_id": 7079,
+    "title": "Ookamikakushi",
+    "title_chinese": "神隱之狼"
+  },
+  {
+    "mal_id": 7081,
+    "title": "Danball Senki",
+    "title_chinese": "紙箱戰機"
+  },
+  {
+    "mal_id": 7088,
+    "title": "Ichiban Ushiro no Daimaou",
+    "title_chinese": "最後大魔王"
+  },
+  {
+    "mal_id": 7148,
+    "title": "Ladies versus Butlers!",
+    "title_chinese": "大小姐×執事！"
+  },
+  {
+    "mal_id": 7463,
+    "title": "Weiß Survive R",
+    "title_chinese": "ヴァイス・サヴァイヴ"
+  },
+  {
+    "mal_id": 7561,
+    "title": "Kaitou Reinya",
+    "title_chinese": "怪盗レーニャ"
+  },
+  {
+    "mal_id": 7580,
+    "title": "Ikkitousen: Xtreme Xecutor",
+    "title_chinese": "一騎當千"
+  },
+  {
+    "mal_id": 7588,
+    "title": "Saraiya Goyou",
+    "title_chinese": "江戶盜賊團五葉"
+  },
+  {
+    "mal_id": 7590,
+    "title": "Mayoi Neko Overrun!",
+    "title_chinese": "嬌蠻貓娘大橫行！"
+  },
+  {
+    "mal_id": 7592,
+    "title": "Nurarihyon no Mago",
+    "title_chinese": "妖怪少爺"
+  },
+  {
+    "mal_id": 7627,
+    "title": "Mitsudomoe",
+    "title_chinese": "超元氣3姊妹"
+  },
+  {
+    "mal_id": 7645,
+    "title": "Heartcatch Precure!",
+    "title_chinese": "光之美少女：甜蜜天使！"
+  },
+  {
+    "mal_id": 7647,
+    "title": "Arakawa Under the Bridge",
+    "title_chinese": "荒川爆笑團"
+  },
+  {
+    "mal_id": 7661,
+    "title": "Giant Killing",
+    "title_chinese": "GIANT KILLING"
+  },
+  {
+    "mal_id": 7662,
+    "title": "Shinrei Tantei Yakumo",
+    "title_chinese": "心靈偵探 八雲"
+  },
+  {
+    "mal_id": 7674,
+    "title": "Bakuman.",
+    "title_chinese": "爆漫王。"
+  },
+  {
+    "mal_id": 7720,
+    "title": "Ookiku Furikabutte: Natsu no Taikai-hen",
+    "title_chinese": "王牌投手 振臂高揮"
+  },
+  {
+    "mal_id": 7724,
+    "title": "Shiki",
+    "title_chinese": "式守同學不只可愛而已"
+  },
+  {
+    "mal_id": 7761,
+    "title": "Masuda Kousuke Gekijou: Gag Manga Biyori +",
+    "title_chinese": "搞笑漫畫日和"
+  },
+  {
+    "mal_id": 7768,
+    "title": "Tantei Opera Milky Holmes",
+    "title_chinese": "偵探歌劇 少女福爾摩斯"
+  },
+  {
+    "mal_id": 7769,
+    "title": "Ookami-san to Shichinin no Nakama-tachi",
+    "title_chinese": "野狼大神與七位夥伴"
+  },
+  {
+    "mal_id": 7785,
+    "title": "Yojouhan Shinwa Taikei",
+    "title_chinese": "四叠半神话大系"
+  },
+  {
+    "mal_id": 7791,
+    "title": "K-On!!",
+    "title_chinese": "K-ON！輕音部"
+  },
+  {
+    "mal_id": 7817,
+    "title": "B-gata H-kei",
+    "title_chinese": "B型H系"
+  },
+  {
+    "mal_id": 7867,
+    "title": "Gon",
+    "title_chinese": "G-on少女騎士團"
+  },
+  {
+    "mal_id": 8057,
+    "title": "Shin Koihime†Musou: Otome Tairan",
+    "title_chinese": "戀姫†無雙"
+  },
+  {
+    "mal_id": 8074,
+    "title": "Highschool of the Dead",
+    "title_chinese": "學園默示錄"
+  },
+  {
+    "mal_id": 8086,
+    "title": "Densetsu no Yuusha no Densetsu",
+    "title_chinese": "传说的勇者的传说"
+  },
+  {
+    "mal_id": 8129,
+    "title": "Kuragehime",
+    "title_chinese": "海月姬"
+  },
+  {
+    "mal_id": 8206,
+    "title": "Hime Chen! Otogi Chikku Idol Lilpri",
+    "title_chinese": "變身公主"
+  },
+  {
+    "mal_id": 8241,
+    "title": "Rio: Rainbow Gate!",
+    "title_chinese": "Rio RainbowGate!"
+  },
+  {
+    "mal_id": 8277,
+    "title": "Hyakka Ryouran: Samurai Girls",
+    "title_chinese": "百花繚亂 SAMURAI GIRLS"
+  },
+  {
+    "mal_id": 8287,
+    "title": "SD Gundam Sangokuden Brave Battle Warriors",
+    "title_chinese": "SD 鋼彈三國傳 Brave Battle Warriors"
+  },
+  {
+    "mal_id": 8311,
+    "title": "Tegamibachi Reverse",
+    "title_chinese": "テガミバチ"
+  },
+  {
+    "mal_id": 8336,
+    "title": "Hanakappa",
+    "title_chinese": "はなかっぱ"
+  },
+  {
+    "mal_id": 8407,
+    "title": "Sora no Otoshimono Forte",
+    "title_chinese": "天降之物"
+  },
+  {
+    "mal_id": 8410,
+    "title": "Metal Fight Beyblade: Baku",
+    "title_chinese": "爆旋陀螺擊爆戰魂"
+  },
+  {
+    "mal_id": 8424,
+    "title": "MM!",
+    "title_chinese": "MM一族！"
+  },
+  {
+    "mal_id": 8425,
+    "title": "Gosick",
+    "title_chinese": "GOSICK"
+  },
+  {
+    "mal_id": 8426,
+    "title": "Hourou Musuko",
+    "title_chinese": "放浪男孩"
+  },
+  {
+    "mal_id": 8449,
+    "title": "Togainu no Chi",
+    "title_chinese": "咎狗之血"
+  },
+  {
+    "mal_id": 8476,
+    "title": "Otome Youkai Zakuro",
+    "title_chinese": "おとめ妖怪 ざくろ"
+  },
+  {
+    "mal_id": 8525,
+    "title": "Kami nomi zo Shiru Sekai",
+    "title_chinese": "只有神知道的世界"
+  },
+  {
+    "mal_id": 8536,
+    "title": "Fortune Arterial: Akai Yakusoku",
+    "title_chinese": "FORTUNE ARTERIAL -赤之約束-"
+  },
+  {
+    "mal_id": 8557,
+    "title": "Shinryaku! Ika Musume",
+    "title_chinese": "侵略！花枝娘"
+  },
+  {
+    "mal_id": 8624,
+    "title": "Digimon Xros Wars",
+    "title_chinese": "數碼寶貝大匯戰"
+  },
+  {
+    "mal_id": 8630,
+    "title": "Hidan no Aria",
+    "title_chinese": "緋彈的亞莉亞"
+  },
+  {
+    "mal_id": 8675,
+    "title": "Seitokai Yakuindomo",
+    "title_chinese": "妄想學生會"
+  },
+  {
+    "mal_id": 8676,
+    "title": "Amagami SS",
+    "title_chinese": "聖誕之吻SS"
+  },
+  {
+    "mal_id": 8726,
+    "title": "Soredemo Machi wa Mawatteiru",
+    "title_chinese": "女僕咖啡廳"
+  },
+  {
+    "mal_id": 8769,
+    "title": "Ore no Imouto ga Konnani Kawaii Wake ga Nai",
+    "title_chinese": "我的妹妹哪有這麼可愛！"
+  },
+  {
+    "mal_id": 8795,
+    "title": "Panty & Stocking with Garterbelt",
+    "title_chinese": "新吊帶襪天使"
+  },
+  {
+    "mal_id": 8841,
+    "title": "Kore wa Zombie desu ka?",
+    "title_chinese": "這樣算是殭屍嗎？"
+  },
+  {
+    "mal_id": 8861,
+    "title": "Yosuga no Sora",
+    "title_chinese": "緣之空"
+  },
+  {
+    "mal_id": 8915,
+    "title": "Dantalian no Shoka",
+    "title_chinese": "丹特麗安的書架"
+  },
+  {
+    "mal_id": 8917,
+    "title": "Mouretsu Pirates",
+    "title_chinese": "迷你裙宇宙海賊"
+  },
+  {
+    "mal_id": 8934,
+    "title": "Star Driver: Kagayaki no Takuto",
+    "title_chinese": "STAR DRIVER 閃亮的塔科特"
+  },
+  {
+    "mal_id": 8937,
+    "title": "Toaru Majutsu no Index II",
+    "title_chinese": "魔法禁書目錄"
+  },
+  {
+    "mal_id": 13115,
+    "title": "Hakuouki: Reimeiroku",
+    "title_chinese": "薄桜鬼 3"
+  },
+  {
+    "mal_id": 17549,
+    "title": "Non Non Biyori",
+    "title_chinese": "悠哉日常大王"
+  },
+  {
+    "mal_id": 17917,
+    "title": "Danball Senki Wars",
+    "title_chinese": "ダンボール戦機ウォーズ"
+  },
+  {
+    "mal_id": 18153,
+    "title": "Kyoukai no Kanata",
+    "title_chinese": "境界的彼方"
+  },
+  {
+    "mal_id": 19815,
+    "title": "No Game No Life",
+    "title_chinese": "NO GAME NO LIFE游戏人生"
+  },
+  {
+    "mal_id": 20507,
+    "title": "Noragami",
+    "title_chinese": "野良神"
+  },
+  {
+    "mal_id": 20583,
+    "title": "Haikyuu!!",
+    "title_chinese": "排球少年！！"
+  },
+  {
+    "mal_id": 20787,
+    "title": "Black Bullet",
+    "title_chinese": "黑色子彈"
+  },
+  {
+    "mal_id": 23273,
+    "title": "Shigatsu wa Kimi no Uso",
+    "title_chinese": "四月是你的谎言"
+  },
+  {
+    "mal_id": 23289,
+    "title": "Gekkan Shoujo Nozaki-kun",
+    "title_chinese": "月刊少女野崎君"
+  },
+  {
+    "mal_id": 23755,
+    "title": "Nanatsu no Taizai",
+    "title_chinese": "七大罪"
+  },
+  {
+    "mal_id": 28825,
+    "title": "Himouto! Umaru-chan",
+    "title_chinese": "干物妹！小埋"
+  },
+  {
+    "mal_id": 31555,
+    "title": "Doushitemo Eto ni Hairitai",
+    "title_chinese": "无论如何都想加入生肖"
+  },
+  {
+    "mal_id": 32282,
+    "title": "Shokugeki no Souma: Ni no Sara",
+    "title_chinese": "食戟之灵 贰之皿"
+  },
+  {
+    "mal_id": 33421,
+    "title": "Yi Ren Zhi Xia",
+    "title_chinese": "一人之下 the outcast"
+  },
+  {
+    "mal_id": 33771,
+    "title": "Cheating Craft",
+    "title_chinese": "作弊艺术"
+  },
+  {
+    "mal_id": 33985,
+    "title": "Bloodivores",
+    "title_chinese": "时空囚徒"
+  },
+  {
+    "mal_id": 34034,
+    "title": "Pokemon Sun & Moon",
+    "title_chinese": "宝可梦 太阳&月亮"
+  },
+  {
+    "mal_id": 35507,
+    "title": "Youkoso Jitsuryoku Shijou Shugi no Kyoushitsu e",
+    "title_chinese": "歡迎來到實力至上主義的教室"
+  },
+  {
+    "mal_id": 35788,
+    "title": "Shokugeki no Souma: San no Sara",
+    "title_chinese": "食戟之灵 餐之皿"
+  },
+  {
+    "mal_id": 35838,
+    "title": "Shoujo Shuumatsu Ryokou",
+    "title_chinese": "少女终末旅行 "
+  },
+  {
+    "mal_id": 35968,
+    "title": "Wotaku ni Koi wa Muzukashii",
+    "title_chinese": "阿宅的恋爱真难"
+  },
+  {
+    "mal_id": 36027,
+    "title": "Ousama Game The Animation",
+    "title_chinese": "国王游戏"
+  },
+  {
+    "mal_id": 36028,
+    "title": "Golden Kamuy",
+    "title_chinese": "黄金神威"
+  },
+  {
+    "mal_id": 36418,
+    "title": "Koneko no Chi: Ponponra Dairyokou",
+    "title_chinese": "こねこのチー ポンポンらー大冒険 2"
+  },
+  {
+    "mal_id": 36432,
+    "title": "Toaru Majutsu no Index III",
+    "title_chinese": "魔法禁书目录第三季"
+  },
+  {
+    "mal_id": 36456,
+    "title": "Boku no Hero Academia 3rd Season",
+    "title_chinese": "我的英雄学院 3"
+  },
+  {
+    "mal_id": 37450,
+    "title": "Seishun Buta Yarou wa Bunny Girl Senpai no Yume wo Minai",
+    "title_chinese": "青春猪头少年不会梦到兔女郎学姐"
+  },
+  {
+    "mal_id": 37517,
+    "title": "Happy Sugar Life",
+    "title_chinese": "幸福甜蜜生活"
+  },
+  {
+    "mal_id": 38480,
+    "title": "Toaru Kagaku no Accelerator",
+    "title_chinese": "科学一方通行"
+  },
+  {
+    "mal_id": 38481,
+    "title": "Toaru Kagaku no Railgun T",
+    "title_chinese": "とある科学の超電磁砲3"
+  },
+  {
+    "mal_id": 38555,
+    "title": "Otome Game no Hametsu Flag shika Nai Akuyaku Reijou ni Tensei shiteshimatta...",
+    "title_chinese": "转生成为了只有乙女游戏破灭Flag的邪恶大小姐…"
+  },
+  {
+    "mal_id": 38656,
+    "title": "Darwin's Game",
+    "title_chinese": "达尔文游戏"
+  },
+  {
+    "mal_id": 38659,
+    "title": "Shinchou Yuusha: Kono Yuusha ga Ore Tueee Kuse ni Shinchou Sugiru",
+    "title_chinese": "慎重勇者～这个勇者明明超强却过分慎重～"
+  },
+  {
+    "mal_id": 38680,
+    "title": "Fruits Basket 1st Season",
+    "title_chinese": "水果篮子（第一季）"
+  },
+  {
+    "mal_id": 38691,
+    "title": "Dr. Stone",
+    "title_chinese": "石纪元"
+  },
+  {
+    "mal_id": 38759,
+    "title": "Sewayaki Kitsune no Senko-san",
+    "title_chinese": "贤惠幼妻仙狐小姐"
+  },
+  {
+    "mal_id": 38790,
+    "title": "Itai no wa Iya nanode Bougyoryoku ni Kyokufuri Shitai to Omoimasu.",
+    "title_chinese": "因为太怕痛就全点防御力了。"
+  },
+  {
+    "mal_id": 38883,
+    "title": "Haikyuu!! To the Top",
+    "title_chinese": "排球少年!! 第四季"
+  },
+  {
+    "mal_id": 38992,
+    "title": "Rikei ga Koi ni Ochita no de Shoumei shitemita.",
+    "title_chinese": "理科生坠入情网，故尝试证明。"
+  },
+  {
+    "mal_id": 39017,
+    "title": "Kyokou Suiri",
+    "title_chinese": "虚构推理"
+  },
+  {
+    "mal_id": 39247,
+    "title": "Kobayashi-san Chi no Maid Dragon S",
+    "title_chinese": "小林家的龙女仆 S"
+  },
+  {
+    "mal_id": 39463,
+    "title": "Gleipnir",
+    "title_chinese": "格莱普尼尔"
+  },
+  {
+    "mal_id": 39535,
+    "title": "Mushoku Tensei: Isekai Ittara Honki Dasu",
+    "title_chinese": "无职转生 ~到了异世界就拿出真本事~"
+  },
+  {
+    "mal_id": 39551,
+    "title": "Tensei shitara Slime Datta Ken 2nd Season",
+    "title_chinese": "転スラ2"
+  },
+  {
+    "mal_id": 39617,
+    "title": "Yakusoku no Neverland 2nd Season",
+    "title_chinese": "約定的夢幻島 第二季"
+  },
+  {
+    "mal_id": 39783,
+    "title": "5-toubun no Hanayome ∬",
+    "title_chinese": "五等分的新娘∬"
+  },
+  {
+    "mal_id": 40028,
+    "title": "Shingeki no Kyojin: The Final Season",
+    "title_chinese": "進撃の巨人4"
+  },
+  {
+    "mal_id": 40174,
+    "title": "Zombieland Saga Revenge",
+    "title_chinese": "佐贺偶像是传奇 Revenge"
+  },
+  {
+    "mal_id": 40586,
+    "title": "Slime Taoshite 300-nen, Shiranai Uchi ni Level Max ni Nattemashita",
+    "title_chinese": "打了300年的史莱姆，不知不觉就练到了满级"
+  },
+  {
+    "mal_id": 40750,
+    "title": "Kaifuku Jutsushi no Yarinaoshi",
+    "title_chinese": "回复术士的重启人生"
+  },
+  {
+    "mal_id": 40752,
+    "title": "Bishounen Tanteidan",
+    "title_chinese": "美少年侦探团"
+  },
+  {
+    "mal_id": 40834,
+    "title": "Ousama Ranking",
+    "title_chinese": "國王排名"
+  },
+  {
+    "mal_id": 40852,
+    "title": "Dr. Stone: Stone Wars",
+    "title_chinese": "Ｄｒ．ＳＴＯＮＥ第2期"
+  },
+  {
+    "mal_id": 40904,
+    "title": "Bokutachi no Remake",
+    "title_chinese": "我们的重制人生"
+  },
+  {
+    "mal_id": 40974,
+    "title": "Kuma Kuma Kuma Bear",
+    "title_chinese": "熊熊勇闯异世界"
+  },
+  {
+    "mal_id": 41006,
+    "title": "Higurashi no Naku Koro ni Gou",
+    "title_chinese": "ひぐらしのなく頃に (2020)"
+  },
+  {
+    "mal_id": 41226,
+    "title": "Uzaki-chan wa Asobitai!",
+    "title_chinese": "宇崎学妹想要玩！"
+  },
+  {
+    "mal_id": 41389,
+    "title": "Tonikaku Kawaii",
+    "title_chinese": "总之就是非常可爱"
+  },
+  {
+    "mal_id": 42072,
+    "title": "Kenja no Deshi wo Nanoru Kenja",
+    "title_chinese": "自称贤者弟子的贤者"
+  },
+  {
+    "mal_id": 42429,
+    "title": "Honzuki no Gekokujou: Shisho ni Naru Tame ni wa Shudan wo Erandeiraremasen 3rd Season",
+    "title_chinese": "爱书的下克上：为了成为图书管理员不择手段！3"
+  },
+  {
+    "mal_id": 42745,
+    "title": "Machikado Mazoku: 2-choume",
+    "title_chinese": "街角魔族 2丁目"
+  },
+  {
+    "mal_id": 43608,
+    "title": "Kaguya-sama wa Kokurasetai: Ultra Romantic",
+    "title_chinese": "辉夜大小姐想让我告白～天才们的恋爱头脑战～ 3"
+  },
+  {
+    "mal_id": 44179,
+    "title": "Qin Han Ying Xiong Zhuan",
+    "title_chinese": "霸王传——秦汉英雄"
+  },
+  {
+    "mal_id": 44511,
+    "title": "Chainsaw Man",
+    "title_chinese": "链锯人"
+  },
+  {
+    "mal_id": 44812,
+    "title": "Duo Bao Xingyun Xing 3",
+    "title_chinese": "开心西游记3"
+  },
+  {
+    "mal_id": 45098,
+    "title": "Zhu Dike: Guguai Dao Da Maoxian I",
+    "title_chinese": "猪迪克之古怪岛大冒险 第1季"
+  },
+  {
+    "mal_id": 45133,
+    "title": "Jingling Meng Ye Luoli",
+    "title_chinese": "精灵梦叶罗丽第一季"
+  },
+  {
+    "mal_id": 45179,
+    "title": "Fu Wu Shu: Zhanguo Fengyun",
+    "title_chinese": "福五鼠之战国烽烟"
+  },
+  {
+    "mal_id": 45665,
+    "title": "Fairy Ranmaru: Anata no Kokoro Otasuke Shimasu",
+    "title_chinese": "F蘭丸"
+  },
+  {
+    "mal_id": 46471,
+    "title": "Tantei wa Mou, Shindeiru.",
+    "title_chinese": "侦探已经，死了"
+  },
+  {
+    "mal_id": 47391,
+    "title": "Seven Knights Revolution: Eiyuu no Keishousha",
+    "title_chinese": "七骑士：革命 -英雄的继承者-"
+  },
+  {
+    "mal_id": 47790,
+    "title": "Sekai Saikou no Ansatsusha, Isekai Kizoku ni Tensei suru",
+    "title_chinese": "世界顶尖的暗杀者转生为异世界贵族"
+  },
+  {
+    "mal_id": 50602,
+    "title": "Spy x Family Part 2",
+    "title_chinese": "间谍过家家"
+  },
+  {
+    "mal_id": 50663,
+    "title": "Poputepipikku 2nd Season",
+    "title_chinese": "ポプテピピック TVアニメーション作品第二シリーズ"
+  },
+  {
+    "mal_id": 50685,
+    "title": "Kaginado Season 2",
+    "title_chinese": "鍵等"
+  },
+  {
+    "mal_id": 50709,
+    "title": "Lycoris Recoil",
+    "title_chinese": "莉可麗絲"
+  },
+  {
+    "mal_id": 56129,
+    "title": "Balala Xiao Mo Xian: Mofa Hai Ying Bao 2nd Season",
+    "title_chinese": "巴啦啦小魔仙之魔法海萤堡 2"
+  }
+]

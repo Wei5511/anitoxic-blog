@@ -1,13 +1,73 @@
 'use client';
 
 import { saveArticle } from '@/app/actions/articles';
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 
 export default function ArticleForm({ article }) {
     const router = useRouter();
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
+    const [showReference, setShowReference] = useState(false);
+    const contentRef = useRef(null);
+
+    const insertMarkdown = (type) => {
+        const textarea = contentRef.current;
+        if (!textarea) return;
+
+        const start = textarea.selectionStart;
+        const end = textarea.selectionEnd;
+        const selectedText = textarea.value.substring(start, end);
+        const beforeText = textarea.value.substring(0, start);
+        const afterText = textarea.value.substring(end);
+
+        let insertText = '';
+        let cursorOffset = 0;
+
+        switch (type) {
+            case 'image':
+                const imageUrl = prompt('請輸入圖片網址 (例如: https://d28s5ztqvkii64.cloudfront.net/...)');
+                if (imageUrl) {
+                    const altText = prompt('請輸入圖片替代文字 (描述)') || '圖片';
+                    insertText = `![${altText}](${imageUrl})`;
+                    cursorOffset = insertText.length;
+                }
+                break;
+
+            case 'link':
+                const linkUrl = prompt('請輸入連結網址');
+                if (linkUrl) {
+                    const linkText = selectedText || prompt('請輸入連結文字') || '連結';
+                    insertText = `[${linkText}](${linkUrl})`;
+                    cursorOffset = insertText.length;
+                }
+                break;
+
+            case 'bold':
+                insertText = selectedText ? `**${selectedText}**` : `**文字**`;
+                cursorOffset = selectedText ? insertText.length : 2;
+                break;
+
+            case 'italic':
+                insertText = selectedText ? `*${selectedText}*` : `*文字*`;
+                cursorOffset = selectedText ? insertText.length : 1;
+                break;
+
+            case 'heading':
+                insertText = selectedText ? `## ${selectedText}` : `## 標題`;
+                cursorOffset = selectedText ? insertText.length : 3;
+                break;
+        }
+
+        if (insertText) {
+            textarea.value = beforeText + insertText + afterText;
+            textarea.focus();
+            textarea.setSelectionRange(
+                start + cursorOffset,
+                start + cursorOffset
+            );
+        }
+    };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -84,11 +144,106 @@ export default function ArticleForm({ article }) {
 
             <div style={{ marginBottom: '1.5rem' }}>
                 <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: '600' }}>文章內容 (Markdown)</label>
+
+                {/* Markdown Toolbar */}
+                <div style={{
+                    background: '#f9fafb',
+                    padding: '0.75rem',
+                    borderRadius: '4px 4px 0 0',
+                    border: '1px solid #d1d5db',
+                    borderBottom: 'none',
+                    display: 'flex',
+                    gap: '0.5rem',
+                    flexWrap: 'wrap'
+                }}>
+                    <button
+                        type="button"
+                        onClick={() => insertMarkdown('image')}
+                        style={toolbarButtonStyle}
+                        title="插入圖片"
+                    >
+                        🖼️ 圖片
+                    </button>
+                    <button
+                        type="button"
+                        onClick={() => insertMarkdown('link')}
+                        style={toolbarButtonStyle}
+                        title="插入連結"
+                    >
+                        🔗 連結
+                    </button>
+                    <div style={{ width: '1px', background: '#d1d5db', margin: '0 0.25rem' }}></div>
+                    <button
+                        type="button"
+                        onClick={() => insertMarkdown('bold')}
+                        style={toolbarButtonStyle}
+                        title="粗體"
+                    >
+                        <strong>B</strong>
+                    </button>
+                    <button
+                        type="button"
+                        onClick={() => insertMarkdown('italic')}
+                        style={toolbarButtonStyle}
+                        title="斜體"
+                    >
+                        <em>I</em>
+                    </button>
+                    <button
+                        type="button"
+                        onClick={() => insertMarkdown('heading')}
+                        style={toolbarButtonStyle}
+                        title="標題"
+                    >
+                        H2
+                    </button>
+                    <div style={{ width: '1px', background: '#d1d5db', margin: '0 0.25rem' }}></div>
+                    <button
+                        type="button"
+                        onClick={() => setShowReference(!showReference)}
+                        style={{ ...toolbarButtonStyle, marginLeft: 'auto' }}
+                        title="Markdown 參考"
+                    >
+                        📖 參考
+                    </button>
+                </div>
+
+                {/* Markdown Reference Panel */}
+                {showReference && (
+                    <div style={{
+                        background: '#fffbeb',
+                        border: '1px solid #fbbf24',
+                        borderTop: 'none',
+                        padding: '1rem',
+                        fontSize: '0.85rem',
+                        fontFamily: 'monospace',
+                        lineHeight: '1.6'
+                    }}>
+                        <strong>Markdown 快速參考：</strong><br />
+                        <strong>圖片：</strong> ![替代文字](圖片網址)<br />
+                        <strong>連結：</strong> [連結文字](網址)<br />
+                        <strong>粗體：</strong> **文字** 或 __文字__<br />
+                        <strong>斜體：</strong> *文字* 或 _文字_<br />
+                        <strong>標題：</strong> ## 標題文字<br />
+                        <strong>分隔線：</strong> ---
+                    </div>
+                )}
+
                 <textarea
+                    ref={contentRef}
                     name="content"
                     defaultValue={article?.content}
                     rows={15}
-                    style={{ width: '100%', padding: '0.75rem', border: '1px solid #d1d5db', borderRadius: '4px', fontFamily: 'monospace' }}
+                    style={{
+                        width: '100%',
+                        padding: '0.75rem',
+                        border: '1px solid #d1d5db',
+                        borderRadius: showReference ? '0' : '0 0 4px 4px',
+                        borderTop: showReference ? 'none' : '1px solid #d1d5db',
+                        fontFamily: 'monospace',
+                        fontSize: '0.9rem',
+                        lineHeight: '1.6'
+                    }}
                 />
             </div>
 
@@ -139,3 +294,19 @@ export default function ArticleForm({ article }) {
         </form>
     );
 }
+
+// Toolbar button styles
+const toolbarButtonStyle = {
+    padding: '0.5rem 1rem',
+    background: '#fff',
+    border: '1px solid #d1d5db',
+    borderRadius: '4px',
+    cursor: 'pointer',
+    fontSize: '0.875rem',
+    fontWeight: '500',
+    color: '#374151',
+    transition: 'all 0.2s',
+    display: 'flex',
+    alignItems: 'center',
+    gap: '0.25rem'
+};

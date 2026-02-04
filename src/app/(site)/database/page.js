@@ -8,22 +8,54 @@ export default function AnimeDatabasePage() {
     const [loading, setLoading] = useState(true);
     const [selectedSeason, setSelectedSeason] = useState('all');
     const [selectedYear, setSelectedYear] = useState('all');
+    const [years, setYears] = useState([{ value: 'all', label: '不限年份' }]);
+
+    // Pagination
+    const [page, setPage] = useState(1);
+    const [totalPages, setTotalPages] = useState(1);
+    const LIMIT = 30;
 
     const [searchQuery, setSearchQuery] = useState('');
 
+    // Fetch Years on Mount
     useEffect(() => {
-        // Parse URL params on mount
+        const fetchYears = async () => {
+            try {
+                const res = await fetch('/api/seasons');
+                const data = await res.json();
+                if (data.success) {
+                    // Extract unique years
+                    const uniqueYears = [...new Set(data.data.map(item => item.year))];
+                    const yearOptions = [
+                        { value: 'all', label: '不限年份' },
+                        ...uniqueYears.map(y => ({ value: y.toString(), label: `${y} 年` }))
+                    ];
+                    setYears(yearOptions);
+                }
+            } catch (error) {
+                console.error('Failed to fetch years', error);
+            }
+        };
+        fetchYears();
+
+        // Parse URL params
         const params = new URLSearchParams(window.location.search);
         const q = params.get('query');
         if (q) {
             setSearchQuery(q);
-            setSelectedYear('all'); // Clear year filter for global search
+            setSelectedYear('all');
         }
     }, []);
 
+    // Reset page when filters change
+    useEffect(() => {
+        setPage(1);
+    }, [selectedYear, selectedSeason, searchQuery]);
+
+    // Fetch Anime
     useEffect(() => {
         fetchAnime();
-    }, [selectedYear, selectedSeason, searchQuery]);
+    }, [page, selectedYear, selectedSeason, searchQuery]); // Add page to dependency
 
     const fetchAnime = async () => {
         setLoading(true);
@@ -33,6 +65,8 @@ export default function AnimeDatabasePage() {
             if (selectedYear !== 'all') params.append('year', selectedYear);
             if (selectedSeason !== 'all') params.append('season', selectedSeason);
             if (searchQuery) params.append('query', searchQuery);
+            params.append('page', page);
+            params.append('limit', LIMIT);
 
             if (params.toString()) url += '?' + params.toString();
 
@@ -40,11 +74,16 @@ export default function AnimeDatabasePage() {
             const data = await response.json();
             if (data.success) {
                 setAnimeList(data.data);
+                if (data.pagination) {
+                    setTotalPages(data.pagination.totalPages);
+                }
             }
         } catch (err) {
             console.error(err);
         } finally {
             setLoading(false);
+            // Scroll to top
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         }
     };
 
@@ -56,20 +95,20 @@ export default function AnimeDatabasePage() {
         { value: 'fall', label: '秋季 (10-12月)' }
     ];
 
-    const years = [
-        { value: 'all', label: '不限年份' },
-        { value: '2025', label: '2025 年' },
-        { value: '2024', label: '2024 年' },
-        { value: '2023', label: '2023 年' }
-    ];
-
     const getSeasonDisplayName = (s) => {
         const names = { winter: '1月', spring: '4月', summer: '7月', fall: '10月' };
         return names[s] || s;
     };
 
+    // Pagination Handlers
+    const handlePageChange = (newPage) => {
+        if (newPage >= 1 && newPage <= totalPages) {
+            setPage(newPage);
+        }
+    };
+
     return (
-        <div className="container" style={{ paddingTop: '2rem' }}>
+        <div className="container" style={{ paddingTop: '2rem', paddingBottom: '4rem' }}>
             <h1 style={{ marginBottom: '0.5rem', fontSize: '1.75rem' }}>📚 動漫資料庫</h1>
             <p style={{ color: 'var(--text-secondary)', marginBottom: '1.5rem' }}>
                 探索歷年動漫作品資料
@@ -149,7 +188,7 @@ export default function AnimeDatabasePage() {
             ) : (
                 <>
                     <p style={{ color: 'var(--text-muted)', marginBottom: '1rem' }}>
-                        共找到 {animeList.length} 部作品
+                        第 {page} 頁 / 共 {totalPages} 頁
                     </p>
                     <div className="anime-grid">
                         {animeList.map((anime) => (
@@ -185,6 +224,43 @@ export default function AnimeDatabasePage() {
                                 </div>
                             </Link>
                         ))}
+                    </div>
+
+                    {/* Pagination Controls */}
+                    <div style={{ display: 'flex', justifyContent: 'center', gap: '0.5rem', marginTop: '3rem', flexWrap: 'wrap' }}>
+                        <button
+                            className="btn btn-secondary"
+                            onClick={() => handlePageChange(1)}
+                            disabled={page === 1}
+                        >
+                            第一頁
+                        </button>
+                        <button
+                            className="btn btn-secondary"
+                            onClick={() => handlePageChange(page - 1)}
+                            disabled={page === 1}
+                        >
+                            上一頁
+                        </button>
+
+                        <span style={{ display: 'flex', alignItems: 'center', padding: '0 1rem', fontWeight: 'bold' }}>
+                            {page} / {totalPages}
+                        </span>
+
+                        <button
+                            className="btn btn-secondary"
+                            onClick={() => handlePageChange(page + 1)}
+                            disabled={page === totalPages}
+                        >
+                            下一頁
+                        </button>
+                        <button
+                            className="btn btn-secondary"
+                            onClick={() => handlePageChange(totalPages)}
+                            disabled={page === totalPages}
+                        >
+                            最後一頁
+                        </button>
                     </div>
                 </>
             )}

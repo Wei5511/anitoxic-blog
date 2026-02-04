@@ -7,9 +7,15 @@ let tursoClient = null;
 // Determine mode
 const isTurso = !!process.env.TURSO_DATABASE_URL;
 
+console.log('--- DATABASE INIT ---');
+console.log('Mode:', isTurso ? 'TURSO (Remote)' : 'LOCAL (SQLite)');
+console.log('CWD:', process.cwd());
+console.log('TURSO_URL:', process.env.TURSO_DATABASE_URL ? 'Set' : 'Unset');
+
 async function getClient() {
   if (isTurso) {
     if (!tursoClient) {
+      console.log('Connecting to Turso...');
       const { createClient } = await import('@libsql/client');
       tursoClient = createClient({
         url: process.env.TURSO_DATABASE_URL,
@@ -19,8 +25,10 @@ async function getClient() {
     return { type: 'turso', db: tursoClient };
   } else {
     if (!localDb) {
+      const dbPath = path.join(process.cwd(), 'anime.db');
+      console.log('Connecting to Local SQLite:', dbPath);
       const Database = (await import('better-sqlite3')).default;
-      localDb = new Database(path.join(process.cwd(), 'anime.db'));
+      localDb = new Database(dbPath);
       localDb.pragma('journal_mode = WAL');
       // Init local if needed (tables should exist in backup)
     }

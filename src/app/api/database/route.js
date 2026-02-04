@@ -7,48 +7,63 @@ export async function GET(request) {
     try {
         const { searchParams } = new URL(request.url);
         const queryParam = searchParams.get('query');
-        const year = searchParams.get('year') || '2025';
+        const year = searchParams.get('year') || 'all'; // Default to all if not specified, but usually frontend sends '2025' or 'all'
         const season = searchParams.get('season');
+        const page = parseInt(searchParams.get('page')) || 1;
+        const limit = parseInt(searchParams.get('limit')) || 30;
+        const offset = (page - 1) * limit;
 
-        let query = 'SELECT * FROM anime WHERE 1=1';
+        let baseQuery = ' FROM anime WHERE 1=1';
         const params = [];
 
-        // Keyword Search (Overrides Year default if year not explicitly all, but let's be flexible)
+        // Keyword Search
         if (queryParam) {
-            query += ` AND (title LIKE ? OR title_japanese LIKE ? OR genres LIKE ? OR synopsis LIKE ?)`;
+            baseQuery += ` AND (title LIKE ? OR title_japanese LIKE ? OR genres LIKE ? OR synopsis LIKE ?)`;
             const likeQuery = `%${queryParam}%`;
             params.push(likeQuery, likeQuery, likeQuery, likeQuery);
-
-            // If searching, we default year to ALL unless specified
-            if (searchParams.get('year')) {
-                query += ` AND year = ?`;
-                params.push(parseInt(year));
-            }
-        } else {
-            // Default behavior: Filter by year
-            if (year !== 'all') {
-                query += ` AND year = ?`;
-                params.push(parseInt(year));
-            } else {
-                // If viewing 'all' years, exclude 2026
-                query += ` AND year != 2026`;
-            }
         }
 
+        // Year Filter
+        if (year !== 'all') {
+            baseQuery += ` AND year = ?`;
+            params.push(parseInt(year));
+        }
+
+        // Season Filter
         if (season && season !== 'all') {
-            query += ` AND LOWER(season) = ?`;
+            baseQuery += ` AND LOWER(season) = ?`;
             params.push(season.toLowerCase());
         }
 
-        query += ` ORDER BY score DESC NULLS LAST, title ASC LIMIT 100`;
+        // Get Total Count
+        const countQuery = `SELECT COUNT(*) as total ${baseQuery}`;
+        const countRes = await executeQuery(countQuery, params);
+        const total = countRes.rows ? countRes.rows[0].total : countRes.all()[0].total;
 
-        const res = await executeQuery(query, params);
+        // Get Data
+        const dataQuery = `SELECT * ${baseQuery} ORDER BY year DESC, 
+            CASE season 
+                WHEN 'winter' THEN 1 
+                WHEN 'spring' THEN 2 
+                WHEN 'summer' THEN 3 
+                WHEN 'fall' THEN 4 
+            END DESC, 
+            score DESC NULLS LAST 
+            LIMIT ? OFFSET ?`;
+
+        const dataParams = [...params, limit, offset];
+        const res = await executeQuery(dataQuery, dataParams);
         const animeList = res.all ? res.all() : res.rows;
 
         return NextResponse.json({
             success: true,
-            count: animeList.length,
-            data: animeList
+            data: animeList,
+            pagination: {
+                total,
+                page,
+                limit,
+                totalPages: Math.ceil(total / limit)
+            }
         });
     } catch (error) {
         console.error('Error fetching anime database:', error);
