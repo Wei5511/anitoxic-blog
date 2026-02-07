@@ -1,12 +1,12 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Suspense } from 'react';
 import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
 import SearchBar from '@/components/SearchBar';
 import GenreFilter from '@/components/GenreFilter';
 
-export default function AnimeDatabasePage() {
+function AnimeDatabaseContent() {
     const router = useRouter();
     const searchParams = useSearchParams();
 
@@ -117,29 +117,9 @@ export default function AnimeDatabasePage() {
 
     const handleSearch = (val) => {
         setSearchQuery(val);
-        // Debounce URL update or update immediately? 
-        // For smooth UX, update state immediately, URL on debounce? 
-        // User asked for "smooth filtering".
-        // Let's rely on the useEffect hook to fetch, but update URL for persistence.
-        // Actually, existing useEffect depends on state. 
-        // If I update state, it fetches.
-        // If I update URL, the URL useEffect logic might trigger again or conflict?
-        // Better: Update URL, and let URL useEffect drive the state?
-        // Or: Update State -> Fetch. Update URL silently?
-        // To keep it simple and consistent: Update State locally -> Update URL.
         const params = new URLSearchParams(window.location.search);
         if (val) params.set('query', val); else params.delete('query');
         params.set('page', 1);
-        // We use window.history.replaceState to avoid pushing history for every keystroke if typing fast
-        // But for SearchBar component, `onSearch` is called on change.
-        // I should probably debounce the fetch.
-        // However, user said "using React state OR URL search params".
-        // Current implementation is mixed.
-        // I will just update local state here to trigger fetch. URL update can happen less frequently or on blur/enter?
-        // Let's update URL on debounce is complex.
-        // Simplest: Update local state. Update URL only when "searching"?
-        // `SearchBar` triggers on change.
-        // I'll update local state. And effectively "replace" URL without navigation to keep it in sync but avoid refresh.
         window.history.replaceState(null, '', `?${params.toString()}`);
     };
 
@@ -343,5 +323,13 @@ export default function AnimeDatabasePage() {
                 </>
             )}
         </div>
+    );
+}
+
+export default function AnimeDatabasePage() {
+    return (
+        <Suspense fallback={<div className="container" style={{ paddingTop: '2rem' }}><div className="loading"><div className="loading-spinner"></div></div></div>}>
+            <AnimeDatabaseContent />
+        </Suspense>
     );
 }
