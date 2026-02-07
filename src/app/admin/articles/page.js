@@ -7,9 +7,9 @@ export const dynamic = 'force-dynamic';
 export default async function ArticlesPage() {
     // Fetch articles sorted by Pinned first, then Date
     const res = await executeQuery(`
-        SELECT id, title, image_url, published_at, is_pinned 
+        SELECT id, title, image_url, published_at, is_pinned, is_recommended, sort_order 
         FROM articles 
-        ORDER BY is_pinned DESC, published_at DESC
+        ORDER BY is_pinned DESC, sort_order ASC, published_at DESC
     `);
     // normalize: executeQuery result behaves like array iterable if needed, but .all() is safer explicit call if adapted for better-sqlite3 style
     const articles = res.all ? res.all() : (res.rows || []);

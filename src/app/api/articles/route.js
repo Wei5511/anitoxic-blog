@@ -13,7 +13,7 @@ export async function GET() {
 
     const res = await executeQuery(`
             SELECT * FROM articles 
-            ORDER BY is_pinned DESC, published_at DESC 
+            ORDER BY is_pinned DESC, sort_order ASC, published_at DESC 
             LIMIT 50
         `);
 

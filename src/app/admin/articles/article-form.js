@@ -269,6 +269,19 @@ export default function ArticleForm({ article }) {
                 <label htmlFor="is_pinned" style={{ fontWeight: '600', cursor: 'pointer' }}>設為精選文章 (Pin to Top)</label>
             </div>
 
+            <div style={{ marginBottom: '2rem' }}>
+                <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: '600' }}>排序 (Sort Order)</label>
+                <input
+                    type="number"
+                    name="sort_order"
+                    defaultValue={article?.sort_order ?? 1000}
+                    style={{ width: '100px', padding: '0.75rem', border: '1px solid #d1d5db', borderRadius: '4px' }}
+                />
+                <div style={{ fontSize: '0.85rem', color: '#6b7280', marginTop: '0.25rem' }}>
+                    數字越小越前面。預設 1000。
+                </div>
+            </div>
+
             <div style={{ display: 'flex', gap: '1rem' }}>
                 <button
                     type="button"

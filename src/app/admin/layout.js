@@ -14,6 +14,7 @@ export default function AdminLayout({ children }) {
     const navItems = [
         { label: '總覽', href: '/admin' },
         { label: '文章管理', href: '/admin/articles' },
+        { label: '編輯推薦 (Picks)', href: '/admin/recommendations' },
         { label: '橫幅管理 (Banner)', href: '/admin/banners' },
         { label: '系統設定', href: '/admin/settings' },
     ];

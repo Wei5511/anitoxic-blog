@@ -74,6 +74,51 @@ export default function HomePage() {
 
   return (
     <div className="container" style={{ paddingTop: '2rem' }}>
+      <style jsx>{`
+        .home-title { font-size: 1.75rem; margin: 0; }
+        .article-card {
+          background: var(--bg-card);
+          border-radius: 1rem;
+          padding: 1.5rem;
+          border: 1px solid var(--border-color);
+          transition: all 0.3s ease;
+          cursor: pointer;
+          display: flex;
+          gap: 1.5rem;
+        }
+        .article-image-container {
+          width: 140px;
+          min-width: 140px;
+          height: 190px;
+          border-radius: 0.5rem;
+          overflow: hidden;
+          background: #2a2a2a;
+          flex-shrink: 0;
+        }
+        .article-title {
+          font-size: 1.3rem;
+          margin: 0.5rem 0;
+          color: var(--text-primary);
+          line-height: 1.4;
+        }
+        .article-excerpt {
+          color: var(--text-secondary);
+          font-size: 0.95rem;
+          line-height: 1.6;
+          margin-bottom: auto;
+          display: -webkit-box;
+          -webkit-line-clamp: 3;
+          -webkit-box-orient: vertical;
+          overflow: hidden;
+        }
+        @media (max-width: 768px) {
+          .home-title { font-size: 1.25rem; } /* Fix 1: Smaller title single line */
+          .article-card { padding: 1rem; gap: 1rem; }
+          .article-image-container { width: 110px; min-width: 110px; height: 150px; } /* Smaller image */
+          .article-title { font-size: 1.1rem; margin: 0.25rem 0; line-height: 1.3; } /* Fix 2: Smaller text */
+          .article-excerpt { font-size: 0.85rem; line-height: 1.5; -webkit-line-clamp: 4; }
+        }
+      `}</style>
 
       {/* Main Layout: Content + Sidebar */}
       <div className="home-layout-grid">
@@ -95,7 +140,7 @@ export default function HomePage() {
               alignItems: 'center',
               marginBottom: '1rem'
             }}>
-              <h1 style={{ fontSize: '1.75rem', margin: 0 }}>📝 最新文章</h1>
+              <h1 className="home-title">📝 最新文章</h1>
 
               {/* Search Bar */}
               <div style={{ position: 'relative' }}>
@@ -181,28 +226,9 @@ export default function HomePage() {
                     key={article.id}
                     style={{ textDecoration: 'none' }}
                   >
-                    <article style={{
-                      background: 'var(--bg-card)',
-                      borderRadius: '1rem',
-                      padding: '1.5rem',
-                      border: '1px solid var(--border-color)',
-                      transition: 'all 0.3s ease',
-                      cursor: 'pointer',
-                      display: 'flex',
-                      gap: '1.5rem'
-                    }}
-                      className="anime-card"
-                    >
+                    <article className="anime-card article-card">
                       {article.image_url && (
-                        <div style={{
-                          width: '140px',
-                          minWidth: '140px',
-                          height: '190px',
-                          borderRadius: '0.5rem',
-                          overflow: 'hidden',
-                          background: '#2a2a2a',
-                          flexShrink: 0
-                        }}>
+                        <div className="article-image-container">
                           {/* eslint-disable-next-line @next/next/no-img-element */}
                           <img
                             src={article.image_url}
@@ -224,24 +250,10 @@ export default function HomePage() {
                           }}>
                             {article.category || '最新消息'}
                           </span>
-                          <h3 style={{
-                            fontSize: '1.3rem',
-                            margin: '0.5rem 0',
-                            color: 'var(--text-primary)',
-                            lineHeight: '1.4'
-                          }}>
+                          <h3 className="article-title">
                             {article.title}
                           </h3>
-                          <p style={{
-                            color: 'var(--text-secondary)',
-                            fontSize: '0.95rem',
-                            lineHeight: '1.6',
-                            marginBottom: 'auto',
-                            display: '-webkit-box',
-                            WebkitLineClamp: 3,
-                            WebkitBoxOrient: 'vertical',
-                            overflow: 'hidden'
-                          }}>
+                          <p className="article-excerpt">
                             {article.excerpt}
                           </p>
                         </div>
@@ -314,10 +326,10 @@ export default function HomePage() {
             border: '1px solid var(--border-color)'
           }}>
             <h3 style={{ borderBottom: '2px solid var(--border-color)', paddingBottom: '0.5rem', marginBottom: '1rem' }}>
-              👍 編輯推薦 (Editor's Pick)
+              👍 編輯推薦
             </h3>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-              {articles.filter(a => a.category === '編輯精選' || a.category === '深度解析').slice(0, 5).map(article => (
+              {articles.filter(a => a.is_recommended).slice(0, 5).map(article => (
                 <Link href={`/articles/${article.id}`} key={article.id} style={{ textDecoration: 'none', display: 'flex', gap: '1rem', alignItems: 'center' }}>
                   <div style={{ width: '60px', height: '60px', borderRadius: '0.5rem', overflow: 'hidden', flexShrink: 0, background: '#333' }}>
                     <img src={article.image_url} alt="" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
