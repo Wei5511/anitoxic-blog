@@ -212,7 +212,7 @@ export default function AnimeDatabasePage() {
                                     )}
                                 </div>
                                 <div className="anime-card-content">
-                                    <h3 className="anime-card-title">{anime.title}</h3>
+                                    <h3 className="anime-card-title">{anime.title_chinese || anime.title}</h3>
                                     <div className="anime-card-meta">
                                         {anime.season && anime.year && (
                                             <span className="anime-card-tag">{anime.year} {getSeasonDisplayName(anime.season)}</span>

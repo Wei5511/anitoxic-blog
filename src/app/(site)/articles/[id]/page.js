@@ -59,8 +59,7 @@ export default function ArticleDetailPage({ params }) {
                 <div style={styles.pinnedHeader}>
                     <h1 style={styles.pinnedTitle}>{article.title}</h1>
                     <div style={styles.pinnedMeta}>
-                        <span style={styles.author}>By 編輯部</span>
-                        <span style={styles.separator}>|</span>
+                        {/* Author removed */}
                         <span style={styles.date}>{formatDate(article.published_at)}</span>
                     </div>
                 </div>
@@ -194,8 +193,7 @@ export default function ArticleDetailPage({ params }) {
                         )}
                         <h1 style={styles.title}>{article.title}</h1>
                         <div style={styles.meta}>
-                            <span>EDITOR: 編輯部</span>
-                            <span style={styles.separator}>|</span>
+                            {/* Editor removed */}
                             <span>{formatDate(article.published_at)}</span>
                         </div>
                     </header>

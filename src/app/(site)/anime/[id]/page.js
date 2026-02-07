@@ -111,7 +111,10 @@ export default function AnimeDetailPage({ params }) {
                 </div>
 
                 <div className="anime-detail-info">
-                    <h1>{anime.title}</h1>
+                    <h1>{anime.title_chinese || anime.title}</h1>
+                    {anime.title_chinese && anime.title !== anime.title_chinese && (
+                        <p style={{ color: 'var(--text-secondary)', fontSize: '1.25rem', marginBottom: '0.5rem' }}>{anime.title}</p>
+                    )}
                     {anime.title_japanese && (
                         <p className="anime-detail-title-jp">{anime.title_japanese}</p>
                     )}
