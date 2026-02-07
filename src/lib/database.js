@@ -129,6 +129,29 @@ export async function searchAnime(query) {
   return db.prepare(sql).all(q, q);
 }
 
+export async function getRelatedAnime(malId, genres) {
+  if (!genres) return [];
+
+  // Pick the first genre for relevance
+  const firstGenre = genres.split(',')[0].trim();
+
+  const { type, db } = await getClient();
+  const sql = `
+        SELECT * FROM anime 
+        WHERE genres LIKE ? AND mal_id != ?
+        ORDER BY score DESC NULLS LAST
+        LIMIT 4
+    `;
+
+  const genreQuery = `%${firstGenre}%`;
+
+  if (type === 'turso') {
+    const res = await db.execute({ sql, args: [genreQuery, malId] });
+    return normalize(res, 'turso');
+  }
+  return db.prepare(sql).all(genreQuery, malId);
+}
+
 // --- Post/Article Operations ---
 
 export async function createPost(animeId, title, content, type = 'update') {

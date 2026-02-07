@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 
-export default function AnimeDetailClient({ initialAnime, id }) {
+export default function AnimeDetailClient({ initialAnime, relatedAnime, id }) {
     const router = useRouter();
     const [anime, setAnime] = useState(initialAnime || null);
     const [loading, setLoading] = useState(!initialAnime);
@@ -297,6 +297,48 @@ export default function AnimeDetailClient({ initialAnime, id }) {
                     </a>
                 </div>
             </div>
+
+            {/* 相關推薦 (Related Anime) */}
+            {relatedAnime && relatedAnime.length > 0 && (
+                <div style={{ marginTop: '3rem', borderTop: '1px solid var(--border-color)', paddingTop: '2rem' }}>
+                    <h2 style={{ marginBottom: '1.5rem', fontSize: '1.5rem' }}>✨ 你可能也會喜歡...</h2>
+                    <div className="anime-grid">
+                        {relatedAnime.map((item) => (
+                            <Link
+                                href={`/anime/${item.mal_id}`}
+                                key={item.mal_id}
+                                className="anime-card"
+                            >
+                                <div className="anime-card-image">
+                                    {item.image_url ? (
+                                        <img
+                                            src={item.image_url}
+                                            alt={item.title}
+                                            loading="lazy"
+                                        />
+                                    ) : (
+                                        <div style={{ width: '100%', height: '100%', background: 'var(--bg-secondary)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '3rem' }}>🎬</div>
+                                    )}
+                                    {item.score && (
+                                        <div className="anime-card-score">★ {item.score}</div>
+                                    )}
+                                </div>
+                                <div className="anime-card-content">
+                                    <h3 className="anime-card-title">{item.title_chinese || item.title}</h3>
+                                    <div className="anime-card-meta">
+                                        {item.year && (
+                                            <span className="anime-card-tag">{item.year}</span>
+                                        )}
+                                        {item.episodes && (
+                                            <span className="anime-card-tag">{item.episodes} 集</span>
+                                        )}
+                                    </div>
+                                </div>
+                            </Link>
+                        ))}
+                    </div>
+                </div>
+            )}
         </div>
     );
 }

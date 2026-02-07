@@ -1,4 +1,4 @@
-import { getAnimeById } from '@/lib/database';
+import { getAnimeById, getRelatedAnime } from '@/lib/database';
 import AnimeDetailClient from './anime-detail-client';
 
 // Generate Dynamic Metadata
@@ -44,5 +44,10 @@ export default async function AnimePage({ params }) {
     const { id } = await params;
     const anime = await getAnimeById(id);
 
-    return <AnimeDetailClient initialAnime={anime} id={id} />;
+    let relatedAnime = [];
+    if (anime && anime.genres) {
+        relatedAnime = await getRelatedAnime(id, anime.genres);
+    }
+
+    return <AnimeDetailClient initialAnime={anime} relatedAnime={relatedAnime} id={id} />;
 }
