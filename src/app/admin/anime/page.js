@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { executeQuery } from '@/lib/database';
 
 export const dynamic = 'force-dynamic';
+// Admin Anime Page
 
 export default async function AdminAnimePage({ searchParams }) {
     const page = parseInt(searchParams.page) || 1;
