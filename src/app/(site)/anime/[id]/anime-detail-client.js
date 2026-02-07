@@ -3,7 +3,6 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import ReactMarkdown from 'react-markdown';
 
 export default function AnimeDetailClient({ initialAnime, relatedAnime, id }) {
     const router = useRouter();
@@ -226,17 +225,11 @@ export default function AnimeDetailClient({ initialAnime, relatedAnime, id }) {
                 </div>
             )}
 
-            {/* 簡介 / 內容 */}
-            {(anime.content || anime.synopsis) && (
+            {/* 簡介 */}
+            {anime.synopsis && (
                 <div style={{ marginTop: '2rem' }}>
                     <h2 style={{ marginBottom: '1rem', fontSize: '1.5rem' }}>📝 故事簡介</h2>
-                    {anime.content ? (
-                        <div className="markdown-content">
-                            <ReactMarkdown>{anime.content}</ReactMarkdown>
-                        </div>
-                    ) : (
-                        <p className="anime-detail-synopsis">{anime.synopsis_chinese || anime.synopsis}</p>
-                    )}
+                    <p className="anime-detail-synopsis">{anime.synopsis_chinese || anime.synopsis}</p>
                 </div>
             )}
 
