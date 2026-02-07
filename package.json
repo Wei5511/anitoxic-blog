@@ -21,7 +21,8 @@
     "opencc-js": "^1.0.5",
     "puppeteer": "^24.36.1",
     "react": "19.2.3",
-    "react-dom": "19.2.3"
+    "react-dom": "19.2.3",
+    "react-markdown": "^10.1.0"
   },
   "devDependencies": {
     "eslint": "^9",
