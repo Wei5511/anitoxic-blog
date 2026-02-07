@@ -2,12 +2,23 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import { useRouter, useSearchParams } from 'next/navigation';
+import SearchBar from '@/components/SearchBar';
+import GenreFilter from '@/components/GenreFilter';
 
 export default function AnimeDatabasePage() {
+    const router = useRouter();
+    const searchParams = useSearchParams();
+
     const [animeList, setAnimeList] = useState([]);
     const [loading, setLoading] = useState(true);
+
+    // Filters
+    const [searchQuery, setSearchQuery] = useState('');
+    const [selectedGenre, setSelectedGenre] = useState('all');
     const [selectedSeason, setSelectedSeason] = useState('all');
     const [selectedYear, setSelectedYear] = useState('all');
+
     const [years, setYears] = useState([{ value: 'all', label: '不限年份' }]);
 
     // Pagination
@@ -15,7 +26,20 @@ export default function AnimeDatabasePage() {
     const [totalPages, setTotalPages] = useState(1);
     const LIMIT = 30;
 
-    const [searchQuery, setSearchQuery] = useState('');
+    // Initialize from URL Params
+    useEffect(() => {
+        const q = searchParams.get('query') || '';
+        const g = searchParams.get('genre') || 'all';
+        const s = searchParams.get('season') || 'all';
+        const y = searchParams.get('year') || 'all';
+        const p = parseInt(searchParams.get('page')) || 1;
+
+        setSearchQuery(q);
+        setSelectedGenre(g);
+        setSelectedSeason(s);
+        setSelectedYear(y);
+        setPage(p);
+    }, [searchParams]);
 
     // Fetch Years on Mount
     useEffect(() => {
@@ -24,7 +48,6 @@ export default function AnimeDatabasePage() {
                 const res = await fetch('/api/seasons');
                 const data = await res.json();
                 if (data.success) {
-                    // Extract unique years
                     const uniqueYears = [...new Set(data.data.map(item => item.year))];
                     const yearOptions = [
                         { value: 'all', label: '不限年份' },
@@ -37,25 +60,12 @@ export default function AnimeDatabasePage() {
             }
         };
         fetchYears();
-
-        // Parse URL params
-        const params = new URLSearchParams(window.location.search);
-        const q = params.get('query');
-        if (q) {
-            setSearchQuery(q);
-            setSelectedYear('all');
-        }
     }, []);
-
-    // Reset page when filters change
-    useEffect(() => {
-        setPage(1);
-    }, [selectedYear, selectedSeason, searchQuery]);
 
     // Fetch Anime
     useEffect(() => {
         fetchAnime();
-    }, [page, selectedYear, selectedSeason, searchQuery]); // Add page to dependency
+    }, [page, selectedYear, selectedSeason, selectedGenre, searchQuery]);
 
     const fetchAnime = async () => {
         setLoading(true);
@@ -64,6 +74,7 @@ export default function AnimeDatabasePage() {
             const params = new URLSearchParams();
             if (selectedYear !== 'all') params.append('year', selectedYear);
             if (selectedSeason !== 'all') params.append('season', selectedSeason);
+            if (selectedGenre !== 'all') params.append('genre', selectedGenre);
             if (searchQuery) params.append('query', searchQuery);
             params.append('page', page);
             params.append('limit', LIMIT);
@@ -82,8 +93,77 @@ export default function AnimeDatabasePage() {
             console.error(err);
         } finally {
             setLoading(false);
-            // Scroll to top
             window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+    };
+
+    // Update URL Helper
+    const updateUrl = (updates) => {
+        const params = new URLSearchParams(searchParams);
+        Object.entries(updates).forEach(([key, value]) => {
+            if (value && value !== 'all') {
+                params.set(key, value);
+            } else {
+                params.delete(key);
+            }
+        });
+        // Reset page on filter change if not specified
+        if (!updates.page) {
+            params.set('page', 1);
+            setPage(1);
+        }
+        router.push(`/database?${params.toString()}`);
+    };
+
+    const handleSearch = (val) => {
+        setSearchQuery(val);
+        // Debounce URL update or update immediately? 
+        // For smooth UX, update state immediately, URL on debounce? 
+        // User asked for "smooth filtering".
+        // Let's rely on the useEffect hook to fetch, but update URL for persistence.
+        // Actually, existing useEffect depends on state. 
+        // If I update state, it fetches.
+        // If I update URL, the URL useEffect logic might trigger again or conflict?
+        // Better: Update URL, and let URL useEffect drive the state?
+        // Or: Update State -> Fetch. Update URL silently?
+        // To keep it simple and consistent: Update State locally -> Update URL.
+        const params = new URLSearchParams(window.location.search);
+        if (val) params.set('query', val); else params.delete('query');
+        params.set('page', 1);
+        // We use window.history.replaceState to avoid pushing history for every keystroke if typing fast
+        // But for SearchBar component, `onSearch` is called on change.
+        // I should probably debounce the fetch.
+        // However, user said "using React state OR URL search params".
+        // Current implementation is mixed.
+        // I will just update local state here to trigger fetch. URL update can happen less frequently or on blur/enter?
+        // Let's update URL on debounce is complex.
+        // Simplest: Update local state. Update URL only when "searching"?
+        // `SearchBar` triggers on change.
+        // I'll update local state. And effectively "replace" URL without navigation to keep it in sync but avoid refresh.
+        window.history.replaceState(null, '', `?${params.toString()}`);
+    };
+
+    const handleGenreSelect = (val) => {
+        setSelectedGenre(val);
+        updateUrl({ genre: val });
+    };
+
+    const handleYearSelect = (val) => {
+        setSelectedYear(val);
+        updateUrl({ year: val });
+    };
+
+    const handleSeasonSelect = (val) => {
+        setSelectedSeason(val);
+        updateUrl({ season: val });
+    };
+
+    const handlePageChange = (newPage) => {
+        if (newPage >= 1 && newPage <= totalPages) {
+            setPage(newPage);
+            const params = new URLSearchParams(searchParams);
+            params.set('page', newPage);
+            router.push(`/database?${params.toString()}`);
         }
     };
 
@@ -100,13 +180,6 @@ export default function AnimeDatabasePage() {
         return names[s] || s;
     };
 
-    // Pagination Handlers
-    const handlePageChange = (newPage) => {
-        if (newPage >= 1 && newPage <= totalPages) {
-            setPage(newPage);
-        }
-    };
-
     return (
         <div className="container" style={{ paddingTop: '2rem', paddingBottom: '4rem' }}>
             <h1 style={{ marginBottom: '0.5rem', fontSize: '1.75rem' }}>📚 動漫資料庫</h1>
@@ -114,33 +187,31 @@ export default function AnimeDatabasePage() {
                 探索歷年動漫作品資料
             </p>
 
-            {/* 篩選器 */}
+            {/* Filter Bar */}
             <div style={{
                 display: 'flex',
                 gap: '1rem',
                 marginBottom: '2rem',
                 flexWrap: 'wrap',
-                alignItems: 'center'
+                alignItems: 'center',
+                background: 'var(--bg-secondary)',
+                padding: '1rem',
+                borderRadius: '1rem'
             }}>
-                {/* Search Input */}
-                <input
-                    type="text"
-                    placeholder="搜尋動漫名稱/類型..."
-                    value={searchQuery}
-                    onChange={(e) => setSearchQuery(e.target.value)}
-                    style={{
-                        padding: '0.75rem 1rem',
-                        borderRadius: '0.5rem',
-                        border: '1px solid var(--border-color)',
-                        background: 'var(--bg-card)',
-                        color: 'var(--text-primary)',
-                        fontSize: '1rem',
-                        minWidth: '250px'
-                    }}
+                <SearchBar
+                    initialValue={searchQuery}
+                    onSearch={handleSearch}
+                    placeholder="搜尋動漫名稱..."
                 />
+
+                <GenreFilter
+                    selectedGenre={selectedGenre}
+                    onSelect={handleGenreSelect}
+                />
+
                 <select
                     value={selectedYear}
-                    onChange={(e) => setSelectedYear(e.target.value)}
+                    onChange={(e) => handleYearSelect(e.target.value)}
                     style={{
                         padding: '0.75rem 1rem',
                         borderRadius: '0.5rem',
@@ -148,7 +219,8 @@ export default function AnimeDatabasePage() {
                         background: 'var(--bg-card)',
                         color: 'var(--text-primary)',
                         fontSize: '1rem',
-                        cursor: 'pointer'
+                        cursor: 'pointer',
+                        outline: 'none'
                     }}
                 >
                     {years.map(y => (
@@ -158,7 +230,7 @@ export default function AnimeDatabasePage() {
 
                 <select
                     value={selectedSeason}
-                    onChange={(e) => setSelectedSeason(e.target.value)}
+                    onChange={(e) => handleSeasonSelect(e.target.value)}
                     style={{
                         padding: '0.75rem 1rem',
                         borderRadius: '0.5rem',
@@ -166,7 +238,8 @@ export default function AnimeDatabasePage() {
                         background: 'var(--bg-card)',
                         color: 'var(--text-primary)',
                         fontSize: '1rem',
-                        cursor: 'pointer'
+                        cursor: 'pointer',
+                        outline: 'none'
                     }}
                 >
                     {seasons.map(s => (
@@ -219,6 +292,11 @@ export default function AnimeDatabasePage() {
                                         )}
                                         {anime.episodes && (
                                             <span className="anime-card-tag">{anime.episodes} 集</span>
+                                        )}
+                                        {anime.genres && (
+                                            <span className="anime-card-tag" style={{ background: 'transparent', border: '1px solid var(--border-color)', padding: '2px 6px', fontSize: '0.7em' }}>
+                                                {anime.genres.split(',')[0]}
+                                            </span>
                                         )}
                                     </div>
                                 </div>

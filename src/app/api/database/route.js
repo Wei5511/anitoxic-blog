@@ -35,6 +35,13 @@ export async function GET(request) {
             params.push(season.toLowerCase());
         }
 
+        // Genre Filter
+        const genre = searchParams.get('genre');
+        if (genre && genre !== 'all') {
+            baseQuery += ` AND genres LIKE ?`;
+            params.push(`%${genre}%`);
+        }
+
         // Get Total Count
         const countQuery = `SELECT COUNT(*) as total ${baseQuery}`;
         const countRes = await executeQuery(countQuery, params);
