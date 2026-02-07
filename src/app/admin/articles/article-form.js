@@ -104,6 +104,17 @@ export default function ArticleForm({ article }) {
                 />
             </div>
 
+            <div style={{ marginBottom: '1.5rem' }}>
+                <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: '600' }}>文章副標題 (Subtitle/Excerpt)</label>
+                <textarea
+                    name="excerpt"
+                    defaultValue={article?.excerpt}
+                    rows={3}
+                    placeholder="簡短描述文章內容，將顯示於列表卡片中..."
+                    style={{ width: '100%', padding: '0.75rem', border: '1px solid #d1d5db', borderRadius: '4px', fontFamily: 'inherit' }}
+                />
+            </div>
+
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem', marginBottom: '1.5rem' }}>
                 <div>
                     <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: '600' }}>文章分類 (Category)</label>

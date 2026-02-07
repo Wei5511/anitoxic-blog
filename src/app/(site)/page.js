@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import BannerCarousel from '@/components/BannerCarousel';
 
 export default function HomePage() {
   const [articles, setArticles] = useState([]);
@@ -79,6 +80,8 @@ export default function HomePage() {
 
         {/* LEFT COLUMN: Latest Articles Feed */}
         <main>
+          <BannerCarousel />
+
           {/* Header Area with Category Filters and Search */}
           <div style={{
             marginBottom: '2rem',

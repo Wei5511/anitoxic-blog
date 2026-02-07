@@ -36,6 +36,7 @@ export async function saveArticle(formData) {
     const category = formData.get('category');
     const content = formData.get('content');
     const myvideo_url = formData.get('myvideo_url');
+    const excerpt = formData.get('excerpt');
     const is_pinned = formData.get('is_pinned') === 'on' ? 1 : 0;
 
     // Basic validation
@@ -46,15 +47,15 @@ export async function saveArticle(formData) {
             // Update
             await executeQuery(`
                 UPDATE articles 
-                SET title = ?, image_url = ?, category = ?, content = ?, myvideo_url = ?, is_pinned = ?, published_at = CURRENT_TIMESTAMP
+                SET title = ?, image_url = ?, category = ?, content = ?, myvideo_url = ?, excerpt = ?, is_pinned = ?, published_at = CURRENT_TIMESTAMP
                 WHERE id = ?
-            `, [title, image_url, category, content, myvideo_url, is_pinned, id]);
+            `, [title, image_url, category, content, myvideo_url, excerpt, is_pinned, id]);
         } else {
             // Create
             await executeQuery(`
-                INSERT INTO articles (title, image_url, category, content, myvideo_url, is_pinned, published_at)
-                VALUES (?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP)
-            `, [title, image_url, category, content, myvideo_url, is_pinned]);
+                INSERT INTO articles (title, image_url, category, content, myvideo_url, excerpt, is_pinned, published_at)
+                VALUES (?, ?, ?, ?, ?, ?, ?, CURRENT_TIMESTAMP)
+            `, [title, image_url, category, content, myvideo_url, excerpt, is_pinned]);
         }
 
         revalidatePath('/admin/articles');
