@@ -5,10 +5,11 @@ export const dynamic = 'force-dynamic';
 // Admin Anime Page
 
 export default async function AdminAnimePage({ searchParams }) {
-    const page = parseInt(searchParams.page) || 1;
+    const resolvedSearchParams = await searchParams;
+    const page = parseInt(resolvedSearchParams.page) || 1;
     const limit = 20;
     const offset = (page - 1) * limit;
-    const search = searchParams.search || '';
+    const search = resolvedSearchParams.search || '';
 
     // Build Query
     let whereClause = 'WHERE 1=1';
