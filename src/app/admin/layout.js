@@ -36,6 +36,7 @@ export default function AdminLayout({ children }) {
             }}>
                 <div style={{ padding: '1.5rem', borderBottom: '1px solid #374151' }}>
                     <h1 style={{ fontSize: '1.25rem', fontWeight: 'bold' }}>後台管理系統</h1>
+                    <span style={{ fontSize: '0.75rem', color: '#9ca3af', display: 'block', marginTop: '0.25rem' }}>v1.2 (Prod)</span>
                 </div>
 
                 <nav style={{ flex: 1, padding: '1rem' }}>
