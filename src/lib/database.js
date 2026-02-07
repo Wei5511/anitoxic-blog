@@ -4,13 +4,18 @@ import path from 'path';
 let localDb = null;
 let tursoClient = null;
 
+// Fallback credentials for Vercel if ENV not set
+const TURSO_URL_FALLBACK = 'libsql://anitoxic-db-wei5511.aws-ap-northeast-1.turso.io';
+const TURSO_TOKEN_FALLBACK = 'eyJhbGciOiJFZERTQSIsInR5cCI6IkpXVCJ9.eyJhIjoicnciLCJpYXQiOjE3Njk5NjM0MDYsImlkIjoiNjQ3NTZhOWItMTcwYy00OTI2LWI2N2EtM2NkYjlhOGNhYTEwIiwicmlkIjoiNTU0MTNmN2ItNGM3NC00YjE1LWI0ZjMtYjhjNDRjNzIwYTM4In0.0zYohaqgOn-m3V7ibjQqrWjX5-96MiKfwVq1syD67hBugqLFgr7lxj7ao4aT1dZ9MQT47kbR2FNyRmK3GkvaBQ';
+
 // Determine mode
-const isTurso = !!process.env.TURSO_DATABASE_URL;
+// If ENV is set, use it. If Vercel (NODE_ENV=production) but no ENV, force Fallback.
+// Actually, just use fallback if ENV missing.
+const isTurso = !!(process.env.TURSO_DATABASE_URL || TURSO_URL_FALLBACK);
 
 console.log('--- DATABASE INIT ---');
 console.log('Mode:', isTurso ? 'TURSO (Remote)' : 'LOCAL (SQLite)');
 console.log('CWD:', process.cwd());
-console.log('TURSO_URL:', process.env.TURSO_DATABASE_URL ? 'Set' : 'Unset');
 
 async function getClient() {
   if (isTurso) {
@@ -18,8 +23,8 @@ async function getClient() {
       console.log('Connecting to Turso...');
       const { createClient } = await import('@libsql/client');
       tursoClient = createClient({
-        url: process.env.TURSO_DATABASE_URL,
-        authToken: process.env.TURSO_AUTH_TOKEN,
+        url: process.env.TURSO_DATABASE_URL || TURSO_URL_FALLBACK,
+        authToken: process.env.TURSO_AUTH_TOKEN || TURSO_TOKEN_FALLBACK,
       });
     }
     return { type: 'turso', db: tursoClient };
