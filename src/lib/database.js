@@ -144,7 +144,7 @@ export async function getRelatedAnime(malId, genres) {
   const sql = `
         SELECT * FROM anime 
         WHERE genres LIKE ? AND mal_id != ?
-        ORDER BY score DESC NULLS LAST
+        ORDER BY RANDOM()
         LIMIT 4
     `;
 
