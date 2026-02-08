@@ -93,7 +93,7 @@ function AnimeDatabaseContent() {
             console.error(err);
         } finally {
             setLoading(false);
-            window.scrollTo({ top: 0, behavior: 'smooth' });
+            // Removed automatic scrollTo to support browser scroll restoration on Back navigation
         }
     };
 
@@ -121,21 +121,25 @@ function AnimeDatabaseContent() {
         if (val) params.set('query', val); else params.delete('query');
         params.set('page', 1);
         window.history.replaceState(null, '', `?${params.toString()}`);
+        window.scrollTo({ top: 0, behavior: 'smooth' });
     };
 
     const handleGenreSelect = (val) => {
         setSelectedGenre(val);
         updateUrl({ genre: val });
+        window.scrollTo({ top: 0, behavior: 'smooth' });
     };
 
     const handleYearSelect = (val) => {
         setSelectedYear(val);
         updateUrl({ year: val });
+        window.scrollTo({ top: 0, behavior: 'smooth' });
     };
 
     const handleSeasonSelect = (val) => {
         setSelectedSeason(val);
         updateUrl({ season: val });
+        window.scrollTo({ top: 0, behavior: 'smooth' });
     };
 
     const handlePageChange = (newPage) => {
@@ -144,6 +148,7 @@ function AnimeDatabaseContent() {
             const params = new URLSearchParams(searchParams);
             params.set('page', newPage);
             router.push(`/database?${params.toString()}`);
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         }
     };
 

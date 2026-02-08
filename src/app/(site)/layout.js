@@ -5,13 +5,13 @@ export default function SiteLayout({ children }) {
     <>
       <header className="header">
         <div className="container header-content">
-          <Link href="/" className="logo">
+          <Link href="/" className="logo" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
             <span className="logo-main">漫性中毒</span>
             <span className="logo-tagline">你的二次元病歷報告</span>
             <span className="logo-icon">📖</span>
           </Link>
           <nav className="nav">
-            <Link href="/" className="nav-link">首頁</Link>
+            <Link href="/" className="nav-link" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>首頁</Link>
             <Link href="/season/2026/winter" className="nav-link">🌸 2026 1月新番</Link>
             <Link href="/database" className="nav-link">📚 動漫資料庫</Link>
             <Link href="/about" className="nav-link">關於</Link>
