@@ -16,12 +16,76 @@ export default function HomePage() {
 
   const categories = ['全部', '動畫介紹', '編輯精選'];
 
+  // Restore State from Session Storage on Mount
   useEffect(() => {
-    fetchArticles();
+    const savedState = sessionStorage.getItem('homeState');
+    if (savedState) {
+      const { articles, searchTerm, categoryFilter, currentPage, scrollY, timestamp } = JSON.parse(savedState);
+      // Check if cache is valid (e.g. < 1 hour) or just use it?
+      // For UX "Back" button, we always want the previous state.
+      // But if user opens new tab? Session storage is per tab.
+      setArticles(articles);
+      setSearchTerm(searchTerm);
+      setCategoryFilter(categoryFilter);
+      setCurrentPage(currentPage);
+      setLoading(false);
+
+      // Restore Scroll after render
+      setTimeout(() => {
+        window.scrollTo({ top: scrollY, behavior: 'instant' });
+      }, 0);
+    } else {
+      fetchArticles();
+    }
   }, []);
+
+  // Save State to Session Storage on Change or Unmount
+  useEffect(() => {
+    // We save on every change to ensure latest state is kept
+    if (!loading && articles.length > 0) {
+      const state = {
+        articles,
+        searchTerm,
+        categoryFilter,
+        currentPage,
+        scrollY: window.scrollY,
+        timestamp: Date.now()
+      };
+      sessionStorage.setItem('homeState', JSON.stringify(state));
+    }
+  }, [articles, searchTerm, categoryFilter, currentPage, loading]);
+
+  // Save scroll position specifically before unloading/navigating?
+  // The above useEffect captures scrollY at the moment of state change, which is WRONG.
+  // We need to capture scrollY just before leaving.
+  useEffect(() => {
+    const handleScroll = () => {
+      // Debounce save or just save on unmount?
+      // Saving on unmount is tricky in SPAs.
+      // Better: Save on Link click?
+      // Or: Save regularly?
+      // Let's use a "beforeunload" or just update a ref, and save in useEffect cleanup?
+      // Cleanup runs on unmount.
+    };
+
+    // Actually, simply saving current state when clicking a Link is hard to orchestrate globally.
+    // OPTION: We update `scrollY` in sessionStorage periodically or on scroll end.
+    const onScroll = () => {
+      if (!loading) {
+        const current = JSON.parse(sessionStorage.getItem('homeState') || '{}');
+        current.scrollY = window.scrollY;
+        sessionStorage.setItem('homeState', JSON.stringify(current));
+      }
+    };
+
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, [loading]);
+
 
   const fetchArticles = async () => {
     try {
+      setLoading(true);
       const response = await fetch('/api/articles');
       const data = await response.json();
       if (data.success) {
@@ -70,7 +134,29 @@ export default function HomePage() {
   const handlePageChange = (pageNumber) => {
     setCurrentPage(pageNumber);
     window.scrollTo({ top: 0, behavior: 'smooth' });
+
+    // Update storage
+    const current = JSON.parse(sessionStorage.getItem('homeState') || '{}');
+    current.currentPage = pageNumber;
+    current.scrollY = 0;
+    sessionStorage.setItem('homeState', JSON.stringify(current));
   };
+
+  const handleSearch = (val) => {
+    setSearchTerm(val);
+    setCurrentPage(1);
+    // Storage update handled by effect or implicit
+  }
+
+  const handleCategory = (cat) => {
+    setCategoryFilter(cat);
+    setCurrentPage(1);
+  }
+
+  // ... (JSX render irrelevant to change, keeping same structure) ... 
+  // Wait, I need to output the FULL component or use smart replacement?
+  // The tool replaces START to END.
+  // I must be careful to include the JSX.
 
   return (
     <div className="container" style={{ paddingTop: '2rem' }}>
@@ -112,28 +198,24 @@ export default function HomePage() {
           overflow: hidden;
         }
         @media (max-width: 768px) {
-          .home-title { font-size: 1.25rem; } /* Fix 1: Smaller title single line */
+          .home-title { font-size: 1.25rem; }
           .article-card { padding: 1rem; gap: 1rem; }
-          .article-image-container { width: 110px; min-width: 110px; height: 150px; } /* Smaller image */
-          .article-title { font-size: 1.1rem; margin: 0.25rem 0; line-height: 1.3; } /* Fix 2: Smaller text */
+          .article-image-container { width: 110px; min-width: 110px; height: 150px; }
+          .article-title { font-size: 1.1rem; margin: 0.25rem 0; line-height: 1.3; }
           .article-excerpt { font-size: 0.85rem; line-height: 1.5; -webkit-line-clamp: 4; }
         }
       `}</style>
 
-      {/* Main Layout: Content + Sidebar */}
       <div className="home-layout-grid">
 
-        {/* LEFT COLUMN: Latest Articles Feed */}
         <main>
           <BannerCarousel />
 
-          {/* Header Area with Category Filters and Search */}
           <div style={{
             marginBottom: '2rem',
             borderBottom: '2px solid var(--border-color)',
             paddingBottom: '1rem'
           }}>
-            {/* Title and Search Row */}
             <div style={{
               display: 'flex',
               justifyContent: 'space-between',
@@ -142,16 +224,12 @@ export default function HomePage() {
             }}>
               <h1 className="home-title">📝 最新文章</h1>
 
-              {/* Search Bar */}
               <div style={{ position: 'relative' }}>
                 <input
                   type="text"
                   placeholder="搜尋文章..."
                   value={searchTerm}
-                  onChange={(e) => {
-                    setSearchTerm(e.target.value);
-                    setCurrentPage(1);
-                  }}
+                  onChange={(e) => handleSearch(e.target.value)}
                   style={{
                     padding: '0.6rem 1rem 0.6rem 2.5rem',
                     borderRadius: '2rem',
@@ -173,15 +251,11 @@ export default function HomePage() {
               </div>
             </div>
 
-            {/* Category Filter Buttons */}
             <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
               {categories.map(cat => (
                 <button
                   key={cat}
-                  onClick={() => {
-                    setCategoryFilter(cat);
-                    setCurrentPage(1);
-                  }}
+                  onClick={() => handleCategory(cat)}
                   style={{
                     padding: '0.4rem 1rem',
                     borderRadius: '2rem',
@@ -210,7 +284,7 @@ export default function HomePage() {
               <div className="empty-state-icon">❌</div>
               <p>找不到符合「{searchTerm}」的文章</p>
               <button
-                onClick={() => setSearchTerm('')}
+                onClick={() => handleSearch('')}
                 className="btn btn-primary"
                 style={{ marginTop: '1rem' }}
               >
@@ -266,7 +340,6 @@ export default function HomePage() {
                 ))}
               </div>
 
-              {/* Pagination Controls */}
               {totalPages > 1 && (
                 <div style={{
                   display: 'flex',
@@ -317,7 +390,6 @@ export default function HomePage() {
           )}
         </main>
 
-        {/* RIGHT COLUMN: Sidebar (Recommendations) */}
         <aside style={{ position: 'sticky', top: '2rem' }}>
           <div style={{
             background: 'var(--bg-card)',
