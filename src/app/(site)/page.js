@@ -18,25 +18,41 @@ export default function HomePage() {
 
   // Restore State from Session Storage on Mount
   useEffect(() => {
+    // Disable browser's automatic scroll restoration to avoid conflict
+    if (typeof window !== 'undefined') {
+      window.history.scrollRestoration = 'manual';
+    }
+
     const savedState = sessionStorage.getItem('homeState');
     if (savedState) {
-      const { articles, searchTerm, categoryFilter, currentPage, scrollY, timestamp } = JSON.parse(savedState);
-      // Check if cache is valid (e.g. < 1 hour) or just use it?
-      // For UX "Back" button, we always want the previous state.
-      // But if user opens new tab? Session storage is per tab.
-      setArticles(articles);
-      setSearchTerm(searchTerm);
-      setCategoryFilter(categoryFilter);
-      setCurrentPage(currentPage);
-      setLoading(false);
+      try {
+        const { articles, searchTerm, categoryFilter, currentPage, scrollY, timestamp } = JSON.parse(savedState);
+        // Optional: Check timestamp validity here
 
-      // Restore Scroll after render
-      setTimeout(() => {
-        window.scrollTo({ top: scrollY, behavior: 'instant' });
-      }, 0);
+        setArticles(articles);
+        setSearchTerm(searchTerm);
+        setCategoryFilter(categoryFilter);
+        setCurrentPage(currentPage);
+        setLoading(false);
+
+        // Restore Scroll with a slight delay to ensure DOM is ready
+        // 0ms might be too fast if the browser is busy painting
+        setTimeout(() => {
+          window.scrollTo({ top: scrollY, behavior: 'instant' });
+        }, 50);
+      } catch (e) {
+        console.error("Failed to parse saved state", e);
+        fetchArticles();
+      }
     } else {
       fetchArticles();
     }
+
+    return () => {
+      // Re-enable auto scroll restoration on cleanup? 
+      // No, keep it manual for this page life-cycle, relying on our own Effect.
+      // Or: window.history.scrollRestoration = 'auto'; // If we navigate away?
+    };
   }, []);
 
   // Save State to Session Storage on Change or Unmount
