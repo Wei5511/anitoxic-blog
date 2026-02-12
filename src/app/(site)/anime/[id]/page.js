@@ -29,12 +29,16 @@ export async function generateMetadata({ params }) {
             description: description,
             images: anime.image_url ? [{ url: anime.image_url }] : [],
             type: 'article',
+            url: `https://anitoxic-blog.vercel.app/anime/${id}`,
         },
         twitter: {
             card: 'summary_large_image',
             title: pageTitle,
             description: description,
             images: anime.image_url ? [anime.image_url] : [],
+        },
+        alternates: {
+            canonical: `https://anitoxic-blog.vercel.app/anime/${id}`,
         },
     };
 }
