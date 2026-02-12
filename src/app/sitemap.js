@@ -18,11 +18,11 @@ export default async function sitemap() {
     // 2. Articles (Blog Posts)
     let articles = [];
     try {
-        const res = await executeQuery('SELECT id, updated_at FROM articles');
+        const res = await executeQuery('SELECT id, published_at FROM articles');
         const rows = res.all ? res.all() : (res.rows || []);
         articles = rows.map((article) => ({
             url: `${baseUrl}/articles/${article.id}`,
-            lastModified: new Date(article.updated_at || new Date()),
+            lastModified: new Date(article.published_at || new Date()),
             changeFrequency: 'weekly',
             priority: 0.8,
         }));
